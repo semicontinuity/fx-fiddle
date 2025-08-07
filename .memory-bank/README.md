@@ -13,6 +13,9 @@ This program will communicate with PLC via serial port.
 Host and PLC exchange messages, consisting of ASCII characters.
 All numbers, that are used in the messages, represented as hex uppercase characters; e.g. 254 = "FE" = [0x46, 0x45]
 
+PLC has memory, organised into 16-bit registers.
+These registers are low-endian; e.g., 77 is represented as ['4' 'D' '0 ' '0'] = [0x004d]
+
 Some of these characters are in the 0x00-0x1F range and are used for framing:
 
 `STX`: `0x02` Start of Text
@@ -38,5 +41,15 @@ Checksum is computed as follows: all payload bytes + `ETX` are summed up, and lo
 
 ### Read memory command
 
+Reads register.
+
 Request payload = `['E' '0' '0' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE)]`
-Response payload = SIZE number of 2-byte words (as hex ASCII chars)
+Response payload = SIZE number of memory bytes (every byte is represented as 2 hex ASCII chars in the message)
+
+
+### Write memory command
+
+Writes register.
+
+Request payload = `['E' '1' '0' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE) + (2*SIZE hex ASCII chars for VALUE)]`
+Response payload = TBD

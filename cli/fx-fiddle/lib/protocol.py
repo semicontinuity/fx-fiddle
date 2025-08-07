@@ -345,3 +345,55 @@ class FxProtocol:
                 values.append(word_value)
         
         return values
+        
+    def write_memory(self, address: int, values: List[int]) -> None:
+        """
+        Write memory to the PLC.
+        
+        Args:
+            address: The starting address to write to
+            values: The list of word values to write
+            
+        Raises:
+            ValueError: If communication fails or response is invalid
+            TimeoutError: If no response is received within the timeout
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: 'E10' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE) + (2*SIZE hex ASCII chars for VALUES)
+        payload = bytearray(b'E10')
+        
+        # Add address (4 hex ASCII chars)
+        address_chars = int_to_hex_chars(address, 4)
+        payload.extend(address_chars)
+        
+        # Add size (2 hex ASCII chars) - SIZE is in bytes (2 bytes per register)
+        byte_size = len(values) * 2  # Each 16-bit register is 2 bytes
+        size_chars = int_to_hex_chars(byte_size, 2)
+        payload.extend(size_chars)
+        
+        # Add values (each value is 4 hex ASCII chars, low-endian)
+        for value in values:
+            # Convert to 4 hex ASCII chars (2 bytes)
+            # Low byte first, then high byte (low-endian)
+            low_byte = value & 0xFF
+            high_byte = (value >> 8) & 0xFF
+            
+            # Add low byte (2 hex ASCII chars)
+            low_byte_chars = int_to_hex_chars(low_byte, 2)
+            payload.extend(low_byte_chars)
+            
+            # Add high byte (2 hex ASCII chars)
+            high_byte_chars = int_to_hex_chars(high_byte, 2)
+            payload.extend(high_byte_chars)
+        
+        # Send command and get response
+        response = self.send_command(payload)
+        
+        # For now, we don't parse the response as it's TBD in the protocol spec
+        # Just check that we got a response
+        if not response and not self.dry_run:
+            raise ValueError("No response received from PLC")

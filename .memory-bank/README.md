@@ -33,7 +33,7 @@ PLC:
 
 there may be multiple request/response pairs after `ENQ`/`ACK` pair, as necessary.
 
-Checksum is computed as follows: all payload bytes are summed up, and lower 2 bytes are added as hex uppercase characters.
+Checksum is computed as follows: all payload bytes + `ETX` are summed up, and lower 2 bytes are added as hex uppercase characters.
 
 
 ### Read memory command

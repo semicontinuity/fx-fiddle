@@ -117,9 +117,9 @@ def parse_response(response: bytes) -> Tuple[bytes, bool]:
     # Extract the checksum (after ETX)
     checksum = response[etx_pos+1:etx_pos+3]
     
-    # Verify checksum (including STX)
-    checksum_data = bytearray([STX])
-    checksum_data.extend(payload)
+    # Verify checksum (including ETX)
+    checksum_data = bytearray(payload)
+    checksum_data.append(ETX)
     calculated_checksum = calculate_checksum(checksum_data)
     checksum_valid = (calculated_checksum == checksum)
     
@@ -233,9 +233,9 @@ class FxProtocol:
         request = bytearray([STX])
         request.extend(payload)
         
-        # Calculate checksum including STX
-        checksum_data = bytearray([ETX])
-        checksum_data.extend(payload)
+        # Calculate checksum including ETX
+        checksum_data = bytearray(payload)
+        checksum_data.append(ETX)
         checksum = calculate_checksum(checksum_data)
         
         # Complete the request with ETX and checksum

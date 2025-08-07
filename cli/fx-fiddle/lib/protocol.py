@@ -333,7 +333,14 @@ class FxProtocol:
         values = []
         for i in range(0, len(response), 4):
             if i + 4 <= len(response):
-                word_str = response[i:i+4].decode('ascii')
+                # Extract high and low bytes (each 2 ASCII chars)
+                high_byte_str = response[i:i+2].decode('ascii')
+                low_byte_str = response[i+2:i+4].decode('ascii')
+                
+                # Swap high and low bytes
+                word_str = low_byte_str + high_byte_str
+                
+                # Convert to integer
                 word_value = int(word_str, 16)
                 values.append(word_value)
         

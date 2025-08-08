@@ -51,8 +51,8 @@ def parse_message(capdata_bytes, request_type=None, who=None):
 
             result = {}
 
-            # If this is a PLC response to a DR or MR request, use the same "what" value
-            if who == "plc" and request_type in ["DR", "MR"]:
+            # If this is a PLC response to a request, use the same "what" value
+            if who == "plc" and request_type in ["DR", "MR", "TYP", "VER", "YW"]:
                 result["what"] = request_type
                 result["address"] = None  # Will be updated if address is found in payload
             else:
@@ -183,6 +183,18 @@ def parse_message(capdata_bytes, request_type=None, who=None):
                             
                             if values:
                                 result["values"] = values
+                    # Check for TYP (PLC type) command
+                    elif payload_ascii == "00E0202":
+                        result["what"] = "TYP"
+                        result["address"] = None
+                    # Check for VER (PLC version) command
+                    elif payload_ascii == "00ECA02":
+                        result["what"] = "VER"
+                        result["address"] = None
+                    # Check for YW command
+                    elif payload_ascii.startswith("E7"):
+                        result["what"] = "YW"
+                        result["address"] = None
                     else:
                         result["what"] = "UNK"
                         result["address"] = None
@@ -265,7 +277,7 @@ def main():
                     })
                     
                     # Update last_host_request if this is a host request
-                    if who == "host" and parsed["what"] in ["DR", "MR"]:
+                    if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "YW"]:
                         last_host_request = parsed["what"]
 
                     # Output as JSON line
@@ -301,7 +313,7 @@ def main():
                 })
                 
                 # Update last_host_request if this is a host request
-                if who == "host" and parsed["what"] in ["DR", "MR"]:
+                if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "YW"]:
                     last_host_request = parsed["what"]
 
                 # Output as JSON line

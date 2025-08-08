@@ -27,9 +27,10 @@ def parse_message(capdata_bytes, request_type=None, who=None):
         if capdata_bytes[0] == ENQ:
             return {"what": "ENQ", "address": None}
         elif capdata_bytes[0] == ACK:
-            # Always set what='ACK' for ACK responses from PLC
+            # Always set what='ACK' for ACK responses
             return {"what": "ACK", "address": None}
-        return {"what": "UNK", "address": None}
+        # For other single-byte messages, use U_XX format
+        return {"what": f"U_{capdata_bytes[0]:02X}", "address": None}
     
     # Check for STX/ETX message
     if len(capdata_bytes) >= 3 and capdata_bytes[0] == STX:
@@ -215,10 +216,14 @@ def parse_message(capdata_bytes, request_type=None, who=None):
                             address_hex = address_hi + address_lo
                             result["address"] = address_hex
                     else:
-                        result["what"] = "UNK"
+                        # For unknown commands, use U_XX format with first 2 chars of payload
+                        prefix = payload_ascii[:2] if len(payload_ascii) >= 2 else payload_ascii.ljust(2, '0')
+                        result["what"] = f"U_{prefix}"
                         result["address"] = None
                 else:
-                    result["what"] = "UNK"
+                    # For unknown commands with short payload, use U_XX format with available chars
+                    prefix = payload_ascii.ljust(2, '0')[:2]
+                    result["what"] = f"U_{prefix}"
                     result["address"] = None
 
             result.update({
@@ -228,8 +233,17 @@ def parse_message(capdata_bytes, request_type=None, who=None):
 
             return result
     
-    # Unknown message type
-    return {"what": "UNK", "address": None}
+    # Unknown message type with no payload
+    if len(capdata_bytes) > 1:
+        # Try to get first two bytes after STX if present
+        start_idx = 1 if capdata_bytes[0] == STX else 0
+        if start_idx + 2 <= len(capdata_bytes):
+            prefix = capdata_bytes[start_idx:start_idx+2].decode('ascii', errors='replace')
+        else:
+            prefix = capdata_bytes[start_idx:].decode('ascii', errors='replace').ljust(2, '0')
+        return {"what": f"U_{prefix}", "address": None}
+    else:
+        return {"what": "U_00", "address": None}
 
 def main():
     if len(sys.argv) != 2:
@@ -288,6 +302,7 @@ def main():
                     }
                     
                     # Parse the message
+                    # Only pass request_type for STX/ETX messages, not for ACK
                     request_type = last_host_request if who == "plc" else None
                     parsed = parse_message(pending_bytes, request_type, who)
                     result.update(parsed)
@@ -323,8 +338,12 @@ def main():
                     "who": who,
                 }
                 
+                # Check if this is an ACK response
+                is_ack = len(capdata_bytes) == 1 and capdata_bytes[0] == ACK
+                
                 # Parse the message
-                request_type = last_host_request if who == "plc" else None
+                # Only pass request_type for STX/ETX messages, not for ACK
+                request_type = last_host_request if who == "plc" and not is_ack else None
                 parsed = parse_message(capdata_bytes, request_type, who)
                 result.update(parsed)
                 result.update({

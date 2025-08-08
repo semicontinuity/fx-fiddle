@@ -1,0 +1,293 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import json
+import sys
+import binascii
+
+
+# Protocol constants
+ENQ = 0x05  # Enquiry
+ACK = 0x06  # Acknowledge
+STX = 0x02  # Start of Text
+ETX = 0x03  # End of Text
+
+def hex_to_bytes(hex_str):
+    """Convert a hex string to bytes."""
+    return binascii.unhexlify(hex_str)
+
+def is_host(src):
+    """Check if the source is the host."""
+    return src == "host"
+
+def parse_message(capdata_bytes):
+    """Parse a message based on its content."""
+    if len(capdata_bytes) == 1:
+        # Single byte message
+        if capdata_bytes[0] == ENQ:
+            return {"what": "ENQ"}
+        elif capdata_bytes[0] == ACK:
+            return {"what": "ACK"}
+        return {"what": "UNK"}
+    
+    # Check for STX/ETX message
+    if len(capdata_bytes) >= 3 and capdata_bytes[0] == STX:
+        etx_pos = -1
+        for i in range(1, len(capdata_bytes)):
+            if capdata_bytes[i] == ETX:
+                etx_pos = i
+                break
+        
+        if etx_pos != -1:
+            # Extract payload and checksum
+            payload = capdata_bytes[1:etx_pos]
+            checksum = capdata_bytes[etx_pos+1:etx_pos+3] if etx_pos + 3 <= len(capdata_bytes) else b''
+            
+            # Convert payload to ASCII
+            payload_ascii = payload.decode('ascii', errors='replace')
+            
+            # Convert checksum to ASCII
+            checksum_ascii = checksum.decode('ascii', errors='replace') if checksum else ""
+
+            result = {}
+
+            # Determine message type based on payload
+            if len(payload) >= 3:
+                if payload_ascii.startswith("E00"):
+                    # Data Register read
+                    result["what"] = "DR"
+                    if len(payload) >= 9:
+                        # Extract address and size
+                        address_hex = payload_ascii[3:7]
+                        size_hex = payload_ascii[7:9]
+                        result["address"] = int(address_hex, 16)
+                        result["size"] = int(size_hex, 16)
+                        
+                        # For responses, extract values
+                        if len(payload) > 9:
+                            values = []
+                            for i in range(9, len(payload_ascii), 4):
+                                if i + 4 <= len(payload_ascii):
+                                    # Extract high and low bytes (each 2 ASCII chars)
+                                    high_byte_str = payload_ascii[i:i+2]
+                                    low_byte_str = payload_ascii[i+2:i+4]
+                                    
+                                    # Swap high and low bytes (low-endian)
+                                    word_str = low_byte_str + high_byte_str
+                                    
+                                    # Convert to integer
+                                    try:
+                                        word_value = int(word_str, 16)
+                                        values.append(word_value)
+                                    except ValueError:
+                                        pass
+                            
+                            if values:
+                                result["values"] = values
+                
+                elif payload_ascii.startswith("E01"):
+                    # Memory Register read
+                    result["what"] = "MR"
+                    if len(payload) >= 9:
+                        # Extract address and size
+                        address_hex = payload_ascii[3:7]
+                        size_hex = payload_ascii[7:9]
+                        result["address"] = int(address_hex, 16)
+                        result["size"] = int(size_hex, 16)
+                        
+                        # For responses, extract values
+                        if len(payload) > 9:
+                            values = []
+                            for i in range(9, len(payload_ascii), 4):
+                                if i + 4 <= len(payload_ascii):
+                                    # Extract high and low bytes (each 2 ASCII chars)
+                                    high_byte_str = payload_ascii[i:i+2]
+                                    low_byte_str = payload_ascii[i+2:i+4]
+                                    
+                                    # Swap high and low bytes (low-endian)
+                                    word_str = low_byte_str + high_byte_str
+                                    
+                                    # Convert to integer
+                                    try:
+                                        word_value = int(word_str, 16)
+                                        values.append(word_value)
+                                    except ValueError:
+                                        pass
+                            
+                            if values:
+                                result["values"] = values
+                    
+                elif payload_ascii.startswith("E10"):
+                    # Data Register write
+                    result["what"] = "DW"
+                    if len(payload) >= 9:
+                        # Extract address and size
+                        address_hex = payload_ascii[3:7]
+                        size_hex = payload_ascii[7:9]
+                        result["address"] = int(address_hex, 16)
+                        result["size"] = int(size_hex, 16)
+                        
+                        # Extract values
+                        values = []
+                        for i in range(9, len(payload_ascii), 4):
+                            if i + 4 <= len(payload_ascii):
+                                # Extract high and low bytes (each 2 ASCII chars)
+                                high_byte_str = payload_ascii[i:i+2]
+                                low_byte_str = payload_ascii[i+2:i+4]
+                                
+                                # Swap high and low bytes (low-endian)
+                                word_str = low_byte_str + high_byte_str
+                                
+                                # Convert to integer
+                                try:
+                                    word_value = int(word_str, 16)
+                                    values.append(word_value)
+                                except ValueError:
+                                    pass
+                        
+                        if values:
+                            result["values"] = values
+                
+                elif payload_ascii.startswith("E11"):
+                    # Memory Register write
+                    result["what"] = "MW"
+                    if len(payload) >= 9:
+                        # Extract address and size
+                        address_hex = payload_ascii[3:7]
+                        size_hex = payload_ascii[7:9]
+                        result["address"] = int(address_hex, 16)
+                        result["size"] = int(size_hex, 16)
+                        
+                        # Extract values
+                        values = []
+                        for i in range(9, len(payload_ascii), 4):
+                            if i + 4 <= len(payload_ascii):
+                                # Extract high and low bytes (each 2 ASCII chars)
+                                high_byte_str = payload_ascii[i:i+2]
+                                low_byte_str = payload_ascii[i+2:i+4]
+                                
+                                # Swap high and low bytes (low-endian)
+                                word_str = low_byte_str + high_byte_str
+                                
+                                # Convert to integer
+                                try:
+                                    word_value = int(word_str, 16)
+                                    values.append(word_value)
+                                except ValueError:
+                                    pass
+                        
+                        if values:
+                            result["values"] = values
+                else:
+                    result["what"] = "UNK"
+            else:
+                result["what"] = "UNK"
+
+            result.update({
+                "sum": checksum_ascii,
+                "data": payload_ascii,
+            })
+
+            return result
+    
+    # Unknown message type
+    return {"what": "UNK"}
+
+def main():
+    if len(sys.argv) != 2:
+        print("Usage: python parse.py <input_json_file>")
+        sys.exit(1)
+    
+    input_file = sys.argv[1]
+    
+    try:
+        with open(input_file, 'r') as f:
+            data = json.load(f)
+    except Exception as e:
+        print(f"Error loading JSON file: {e}")
+        sys.exit(1)
+    
+    # Process records
+    pending_frames = {}  # Store incomplete frames by source
+    
+    for record in data:
+        if "layers" not in record["_source"]:
+            continue
+        
+        layers = record["_source"]["layers"]
+        
+        # Skip records without usb.capdata
+        if "usb.capdata" not in layers:
+            continue
+        
+        # Get source and determine who is sending
+        src = layers.get("usb.src", [""])[0]
+        who = "host" if is_host(src) else "plc"
+        
+        # Get capdata
+        capdata_hex = layers["usb.capdata"][0]
+        capdata_bytes = hex_to_bytes(capdata_hex)
+        
+        # Check if this is a continuation of a previous frame
+        if who in pending_frames:
+            # We have a pending frame, check if this completes it
+            pending_bytes = pending_frames[who]["bytes"]
+            
+            # Append the new bytes (using bytearray)
+            new_pending = bytearray(pending_bytes)
+            new_pending.extend(capdata_bytes)
+            pending_bytes = bytes(new_pending)
+            
+            # Check if we have a complete frame (has STX and ETX)
+            if STX in pending_bytes and ETX in pending_bytes:
+                # We have a complete frame
+                etx_index = pending_bytes.index(ETX)
+                if etx_index + 3 <= len(pending_bytes):  # ETX + 2 checksum bytes
+                    # Process the complete frame
+                    result = {
+                        "who": who,
+                    }
+                    
+                    # Parse the message
+                    parsed = parse_message(pending_bytes)
+                    result.update(parsed)
+                    result.update({
+                        "capdata": binascii.hexlify(pending_bytes).decode('ascii')
+                    })
+
+                    # Output as JSON line
+                    print(json.dumps(result))
+                    
+                    # Clear pending frame
+                    del pending_frames[who]
+                else:
+                    # Still waiting for more bytes (checksum)
+                    pending_frames[who]["bytes"] = pending_bytes
+            else:
+                # Still waiting for more bytes
+                pending_frames[who]["bytes"] = pending_bytes
+        else:
+            # New frame
+            if STX in capdata_bytes and ETX not in capdata_bytes:
+                # This is the start of a multi-frame message
+                pending_frames[who] = {
+                    "bytes": capdata_bytes
+                }
+            else:
+                # This is a complete frame or a single-byte message
+                result = {
+                    "who": who,
+                }
+                
+                # Parse the message
+                parsed = parse_message(capdata_bytes)
+                result.update(parsed)
+                result.update({
+                    "capdata": capdata_hex
+                })
+
+                # Output as JSON line
+                print(json.dumps(result))
+
+if __name__ == "__main__":
+    main()

@@ -500,6 +500,57 @@ class FxProtocol:
                 values.append(word_value)
         
         return values
+    
+    def read_flash(self, address: int, size: int) -> List[int]:
+        """
+        Read flash memory from the PLC.
+        
+        Args:
+            address: The starting address to read from
+            size: The number of words to read
+            
+        Returns:
+            A list of word values read from flash memory
+            
+        Raises:
+            ValueError: If communication fails or response is invalid
+            TimeoutError: If no response is received within the timeout
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: 'E01' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE)
+        payload = bytearray(b'E01')
+        
+        # Add address (4 hex ASCII chars)
+        address_chars = int_to_hex_chars(address, 4)
+        payload.extend(address_chars)
+        
+        # Add size (2 hex ASCII chars)
+        size_chars = int_to_hex_chars(size, 2)
+        payload.extend(size_chars)
+        
+        # Send command and get response
+        response = self.send_command(payload)
+        
+        # Parse response as hex ASCII chars representing words
+        values = []
+        for i in range(0, len(response), 4):
+            if i + 4 <= len(response):
+                # Extract high and low bytes (each 2 ASCII chars)
+                high_byte_str = response[i:i+2].decode('ascii')
+                low_byte_str = response[i+2:i+4].decode('ascii')
+                
+                # Swap high and low bytes
+                word_str = low_byte_str + high_byte_str
+                
+                # Convert to integer
+                word_value = int(word_str, 16)
+                values.append(word_value)
+        
+        return values
         
     def write_memory(self, address: int, values: List[int]) -> None:
         """

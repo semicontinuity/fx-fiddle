@@ -1,0 +1,3170 @@
+[
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "4630303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303046343031303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3430303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303230"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030313030323030303130303030303030303130303731334630383030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030333833304136354130303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3041363030303130303030303030303030303230303033303041363030034534"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030383046453032034644"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030034333"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303138033941"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303138033941"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303138033941"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303038033939"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303038033939"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "05"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "06"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "0230304530323032033643"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0242313545034630"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "0230304543413032033845"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0237313346034534"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030313739303237034532"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0230303030304130303130303041423030414230304141303041413030414130"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3042313545303030303130303030303030313030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "303031303030303030303030303038033939"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "0230304530323032033643"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0242313545034630"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "0230304543413032033845"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0237313346034534"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453031383030303032034433"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0231303030034334"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453031383034343043034543"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "02303030303030303030303030303030303030303030303030033833"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.0"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ],
+        "usb.capdata": [
+          "02453030383030304645034642"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "0243383030423135453038303031303030303030303030303031453030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030413030304130303331303031463030313030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030383030303830304539303730353030303330303033303030333030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030383035344430"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3730303030303030303030303030303030303030303033303030333030363430"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3046464646464646464646464646464646464646464646464646464646464646"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "4630303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303046343031303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3430303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030303030303030303030303030303030303030303030303030303030303230"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "1.2.2"
+        ],
+        "usb.capdata": [
+          "3030313030323030303130303030303030303130303731334630383030303030"
+        ]
+      }
+    }
+  },
+  {
+    "_index": "packets-2025-08-08",
+    "_type": "doc",
+    "_score": null,
+    "_source": {
+      "layers": {
+        "usb.src": [
+          "host"
+        ]
+      }
+    }
+  }
+]

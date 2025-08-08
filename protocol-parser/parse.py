@@ -27,7 +27,11 @@ def parse_message(capdata_bytes, request_type=None, who=None):
         if capdata_bytes[0] == ENQ:
             return {"what": "ENQ", "address": None}
         elif capdata_bytes[0] == ACK:
-            return {"what": "ACK", "address": None}
+            # If this is a response to BS or BC, keep the request type
+            if who == "plc" and request_type in ["BS", "BC"]:
+                return {"what": request_type, "address": None}
+            else:
+                return {"what": "ACK", "address": None}
         return {"what": "UNK", "address": None}
     
     # Check for STX/ETX message
@@ -52,7 +56,7 @@ def parse_message(capdata_bytes, request_type=None, who=None):
             result = {}
 
             # If this is a PLC response to a request, use the same "what" value
-            if who == "plc" and request_type in ["DR", "MR", "TYP", "VER", "YW"]:
+            if who == "plc" and request_type in ["DR", "MR", "TYP", "VER"]:
                 result["what"] = request_type
                 result["address"] = None  # Will be updated if address is found in payload
             else:
@@ -191,10 +195,28 @@ def parse_message(capdata_bytes, request_type=None, who=None):
                     elif payload_ascii == "00ECA02":
                         result["what"] = "VER"
                         result["address"] = None
-                    # Check for YW command
-                    elif payload_ascii.startswith("E7"):
-                        result["what"] = "YW"
-                        result["address"] = None
+                    # Check for BS (Bit Set) command
+                    elif payload_ascii.startswith("E7") and len(payload_ascii) >= 5:
+                        result["what"] = "BS"
+                        # Extract word address (lo-endian)
+                        if len(payload_ascii) >= 5:
+                            # Get the address part (2 bytes after "E7")
+                            address_lo = payload_ascii[2:4]
+                            address_hi = payload_ascii[4:6] if len(payload_ascii) >= 6 else "00"
+                            # Combine in correct order (lo-endian)
+                            address_hex = address_hi + address_lo
+                            result["address"] = address_hex
+                    # Check for BC (Bit Clear) command
+                    elif payload_ascii.startswith("E8") and len(payload_ascii) >= 5:
+                        result["what"] = "BC"
+                        # Extract word address (lo-endian)
+                        if len(payload_ascii) >= 5:
+                            # Get the address part (2 bytes after "E8")
+                            address_lo = payload_ascii[2:4]
+                            address_hi = payload_ascii[4:6] if len(payload_ascii) >= 6 else "00"
+                            # Combine in correct order (lo-endian)
+                            address_hex = address_hi + address_lo
+                            result["address"] = address_hex
                     else:
                         result["what"] = "UNK"
                         result["address"] = None
@@ -277,7 +299,7 @@ def main():
                     })
                     
                     # Update last_host_request if this is a host request
-                    if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "YW"]:
+                    if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
                         last_host_request = parsed["what"]
 
                     # Output as JSON line
@@ -313,7 +335,7 @@ def main():
                 })
                 
                 # Update last_host_request if this is a host request
-                if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "YW"]:
+                if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
                     last_host_request = parsed["what"]
 
                 # Output as JSON line

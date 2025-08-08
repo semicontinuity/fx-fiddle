@@ -212,6 +212,47 @@ class FxProtocol:
                 print(f"Error waiting for ACK: {str(e)}")
             return False
     
+    def create_request(self, payload: bytes) -> bytes:
+        """
+        Create a complete request with STX, payload, ETX, and checksum.
+        
+        Args:
+            payload: The command payload
+            
+        Returns:
+            The complete request as bytes
+        """
+        # Create request with STX and payload
+        request = bytearray([STX])
+        request.extend(payload)
+        
+        # Calculate checksum including ETX
+        checksum_data = bytearray(payload)
+        checksum_data.append(ETX)
+        checksum = calculate_checksum(checksum_data)
+        
+        # Complete the request with ETX and checksum
+        request.append(ETX)
+        request.extend(checksum)
+        
+        return bytes(request)
+    
+    def print_request_info(self, request: bytes, payload: bytes, checksum: bytes):
+        """
+        Print detailed information about a request.
+        
+        Args:
+            request: The complete request as bytes
+            payload: The payload part of the request
+            checksum: The checksum part of the request
+        """
+        print(f"STX: 0x{STX:02X}")
+        print(f"Payload (hex): {' '.join([f'0x{b:02X}' for b in payload])}")
+        print(f"Payload (ASCII): {payload.decode('ascii', errors='replace')}")
+        print(f"ETX: 0x{ETX:02X}")
+        print(f"Checksum: {' '.join([f'0x{b:02X}' for b in checksum])} (ASCII: {checksum.decode('ascii', errors='replace')})")
+        print(f"Complete request: {' '.join([f'0x{b:02X}' for b in request])}")
+    
     def send_command(self, payload: bytes) -> bytes:
         """
         Send a command to the PLC and read the response.
@@ -229,40 +270,24 @@ class FxProtocol:
         if not self.dry_run and (not self.port or not self.port.is_open):
             raise ValueError("Serial port is not open")
         
-        # Create request with STX and payload
-        request = bytearray([STX])
-        request.extend(payload)
+        # Create the complete request
+        request = self.create_request(payload)
         
-        # Calculate checksum including ETX
-        checksum_data = bytearray(payload)
-        checksum_data.append(ETX)
-        checksum = calculate_checksum(checksum_data)
-        
-        # Complete the request with ETX and checksum
-        request.append(ETX)
-        request.extend(checksum)
+        # Extract checksum for verbose output
+        etx_pos = request.find(ETX)
+        checksum = request[etx_pos+1:etx_pos+3]
         
         # If dry run, just print the request and return empty response
         if self.dry_run:
             print("Dry run mode - Request that would be sent:")
-            print(f"STX: 0x{STX:02X}")
-            print(f"Payload (hex): {' '.join([f'0x{b:02X}' for b in payload])}")
-            print(f"Payload (ASCII): {payload.decode('ascii', errors='replace')}")
-            print(f"ETX: 0x{ETX:02X}")
-            print(f"Checksum: {' '.join([f'0x{b:02X}' for b in checksum])} (ASCII: {checksum.decode('ascii', errors='replace')})")
-            print(f"Complete request: {' '.join([f'0x{b:02X}' for b in request])}")
+            self.print_request_info(request, payload, checksum)
             # Return empty response in dry run mode
             return b''
         
         # Print verbose information if requested
         if self.verbose:
             print("Sending request:")
-            print(f"STX: 0x{STX:02X}")
-            print(f"Payload (hex): {' '.join([f'0x{b:02X}' for b in payload])}")
-            print(f"Payload (ASCII): {payload.decode('ascii', errors='replace')}")
-            print(f"ETX: 0x{ETX:02X}")
-            print(f"Checksum: {' '.join([f'0x{b:02X}' for b in checksum])} (ASCII: {checksum.decode('ascii', errors='replace')})")
-            print(f"Complete request: {' '.join([f'0x{b:02X}' for b in request])}")
+            self.print_request_info(request, payload, checksum)
         
         # Send request
         assert self.port is not None, "Port should be open at this point"
@@ -294,6 +319,136 @@ class FxProtocol:
             raise ValueError("Response checksum is invalid")
         
         return payload
+    
+    def send_command_expect_ack(self, payload: bytes) -> bool:
+        """
+        Send a command to the PLC and expect an ACK response.
+        
+        Args:
+            payload: The command payload
+            
+        Returns:
+            True if ACK was received, False otherwise
+            
+        Raises:
+            ValueError: If communication fails or port is not open
+        """
+        if not self.dry_run and (not self.port or not self.port.is_open):
+            raise ValueError("Serial port is not open")
+        
+        # Create the complete request
+        request = self.create_request(payload)
+        
+        # Extract checksum for verbose output
+        etx_pos = request.find(ETX)
+        checksum = request[etx_pos+1:etx_pos+3]
+        
+        # If dry run, just print the request and return success
+        if self.dry_run:
+            print("Dry run mode - Request that would be sent:")
+            self.print_request_info(request, payload, checksum)
+            return True
+        
+        # Print verbose information if requested
+        if self.verbose:
+            print("Sending request:")
+            self.print_request_info(request, payload, checksum)
+        
+        # Send request
+        assert self.port is not None, "Port should be open at this point"
+        self.port.write(request)
+        
+        # Read response (expecting ACK)
+        assert self.port is not None, "Port should be open at this point"
+        response = self.port.read(1)
+        
+        # Check if response is ACK
+        success = bool(response) and response[0] == ACK
+        
+        # Print verbose information if requested
+        if self.verbose:
+            if success:
+                print("Received ACK:")
+                print(f"Hex bytes: 0x{ACK:02X}")
+            else:
+                if response:
+                    print(f"Did not receive ACK, got: 0x{response[0]:02X}")
+                else:
+                    print("No response received")
+        
+        return success
+    
+    def set_bit(self, address: int) -> bool:
+        """
+        Set a bit at the specified address.
+        
+        Args:
+            address: The address of the bit to set
+            
+        Returns:
+            True if the bit was successfully set, False otherwise
+            
+        Raises:
+            ValueError: If communication fails or port is not open
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: 'E7' + (2 hex ASCII chars for low byte) + (2 hex ASCII chars for high byte)
+        payload = bytearray(b'E7')
+        
+        # Add address in lo-endian format (low byte first, then high byte)
+        low_byte = address & 0xFF
+        high_byte = (address >> 8) & 0xFF
+        
+        # Convert to ASCII hex chars
+        low_byte_chars = int_to_hex_chars(low_byte, 2)
+        high_byte_chars = int_to_hex_chars(high_byte, 2)
+        
+        # Add to payload
+        payload.extend(low_byte_chars)
+        payload.extend(high_byte_chars)
+        
+        # Send command and expect ACK
+        return self.send_command_expect_ack(payload)
+    
+    def clear_bit(self, address: int) -> bool:
+        """
+        Clear a bit at the specified address.
+        
+        Args:
+            address: The address of the bit to clear
+            
+        Returns:
+            True if the bit was successfully cleared, False otherwise
+            
+        Raises:
+            ValueError: If communication fails or port is not open
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: 'E8' + (2 hex ASCII chars for low byte) + (2 hex ASCII chars for high byte)
+        payload = bytearray(b'E8')
+        
+        # Add address in lo-endian format (low byte first, then high byte)
+        low_byte = address & 0xFF
+        high_byte = (address >> 8) & 0xFF
+        
+        # Convert to ASCII hex chars
+        low_byte_chars = int_to_hex_chars(low_byte, 2)
+        high_byte_chars = int_to_hex_chars(high_byte, 2)
+        
+        # Add to payload
+        payload.extend(low_byte_chars)
+        payload.extend(high_byte_chars)
+        
+        # Send command and expect ACK
+        return self.send_command_expect_ack(payload)
     
     def read_memory(self, address: int, size: int) -> List[int]:
         """

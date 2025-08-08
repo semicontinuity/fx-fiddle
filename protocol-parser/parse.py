@@ -27,11 +27,8 @@ def parse_message(capdata_bytes, request_type=None, who=None):
         if capdata_bytes[0] == ENQ:
             return {"what": "ENQ", "address": None}
         elif capdata_bytes[0] == ACK:
-            # If this is a response to BS or BC, keep the request type
-            if who == "plc" and request_type in ["BS", "BC"]:
-                return {"what": request_type, "address": None}
-            else:
-                return {"what": "ACK", "address": None}
+            # Always set what='ACK' for ACK responses from PLC
+            return {"what": "ACK", "address": None}
         return {"what": "UNK", "address": None}
     
     # Check for STX/ETX message
@@ -301,7 +298,7 @@ def main():
                     # Update last_host_request if this is a host request
                     if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
                         last_host_request = parsed["what"]
-
+                    
                     # Output as JSON line
                     print(json.dumps(result))
                     
@@ -337,7 +334,7 @@ def main():
                 # Update last_host_request if this is a host request
                 if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
                     last_host_request = parsed["what"]
-
+                
                 # Output as JSON line
                 print(json.dumps(result))
 

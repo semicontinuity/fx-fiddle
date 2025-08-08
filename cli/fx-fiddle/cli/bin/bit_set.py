@@ -8,7 +8,7 @@ import sys
 import click
 
 from . import option_port
-from ...lib.protocol import FxProtocol
+from ...lib.protocol import FxProtocol, ACK
 
 
 def parse_int_or_hex(value: str) -> int:
@@ -57,12 +57,61 @@ def bit_set(
             payload.extend(low_byte_chars)
             payload.extend(high_byte_chars)
             
-            # Send command and get response
-            response = protocol.send_command(payload)
+            # Create the full request with STX, ETX, and checksum
+            from ...lib.protocol import STX, ETX, calculate_checksum
+            request = bytearray([STX])
+            request.extend(payload)
             
-            # If not dry run, display results
-            if not dry_run:
+            # Calculate checksum including ETX
+            checksum_data = bytearray(payload)
+            checksum_data.append(ETX)
+            checksum = calculate_checksum(checksum_data)
+            
+            # Complete the request with ETX and checksum
+            request.append(ETX)
+            request.extend(checksum)
+            
+            # If dry run, just print the request and return
+            if dry_run:
+                print("Dry run mode - Request that would be sent:")
+                print(f"STX: 0x{STX:02X}")
+                print(f"Payload (hex): {' '.join([f'0x{b:02X}' for b in payload])}")
+                print(f"Payload (ASCII): {payload.decode('ascii', errors='replace')}")
+                print(f"ETX: 0x{ETX:02X}")
+                print(f"Checksum: {' '.join([f'0x{b:02X}' for b in checksum])} (ASCII: {checksum.decode('ascii', errors='replace')})")
+                print(f"Complete request: {' '.join([f'0x{b:02X}' for b in request])}")
+                return
+            
+            # Print verbose information if requested
+            if verbose:
+                print("Sending request:")
+                print(f"STX: 0x{STX:02X}")
+                print(f"Payload (hex): {' '.join([f'0x{b:02X}' for b in payload])}")
+                print(f"Payload (ASCII): {payload.decode('ascii', errors='replace')}")
+                print(f"ETX: 0x{ETX:02X}")
+                print(f"Checksum: {' '.join([f'0x{b:02X}' for b in checksum])} (ASCII: {checksum.decode('ascii', errors='replace')})")
+                print(f"Complete request: {' '.join([f'0x{b:02X}' for b in request])}")
+            
+            # Send request
+            if protocol.port is None:
+                raise ValueError("Serial port is not open")
+            protocol.port.write(request)
+            
+            # Read response (expecting ACK)
+            response = protocol.port.read(1)
+            
+            # Check if response is ACK
+            if response and response[0] == ACK:
+                if verbose:
+                    print("Received ACK:")
+                    print(f"Hex bytes: 0x{ACK:02X}")
                 print(f"Bit set at address {address} (0x{addr_int:X})")
+            else:
+                if response:
+                    print(f"Did not receive ACK, got: 0x{response[0]:02X}")
+                else:
+                    print("No response received")
+                raise ValueError("Failed to set bit")
     
     except Exception as e:
         click.echo(f"Error: {str(e)}", err=True)

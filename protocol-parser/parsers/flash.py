@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Parser for Data Register (DR and DW) messages.
+Parser for Flash (FR and FW) messages.
 """
 
 from typing import Any, List
@@ -9,9 +9,9 @@ from .constants import *
 from .common import extract_values_from_payload
 
 
-def parse_dr(payload_ascii: str) -> dict[str, Any]:
+def parse_fr(payload_ascii: str) -> dict[str, Any]:
     """
-    Parse a Data Register read message.
+    Parse a Flash read message.
     
     Args:
         payload_ascii: The ASCII payload to parse
@@ -20,7 +20,7 @@ def parse_dr(payload_ascii: str) -> dict[str, Any]:
         A dictionary with the parsed message
     """
     result = {
-        "what": DR_TYPE,
+        "what": FR_TYPE,
         "address": None,
         "size": None,
         "data": payload_ascii
@@ -47,9 +47,9 @@ def parse_dr(payload_ascii: str) -> dict[str, Any]:
     return result
 
 
-def parse_dw(payload_ascii: str) -> dict[str, Any]:
+def parse_fw(payload_ascii: str) -> dict[str, Any]:
     """
-    Parse a Data Register write message.
+    Parse a Flash write message.
     
     Args:
         payload_ascii: The ASCII payload to parse
@@ -58,7 +58,7 @@ def parse_dw(payload_ascii: str) -> dict[str, Any]:
         A dictionary with the parsed message
     """
     result = {
-        "what": DW_TYPE,
+        "what": FW_TYPE,
         "address": None,
         "size": None,
         "data": payload_ascii

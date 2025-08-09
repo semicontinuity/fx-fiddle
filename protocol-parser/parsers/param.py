@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Parser for Memory Register (MR and MW) messages.
+Parser for Parameter (PR and PW) messages.
 """
 
 from typing import Any, List
@@ -9,9 +9,9 @@ from .constants import *
 from .common import extract_values_from_payload
 
 
-def parse_mr(payload_ascii: str) -> dict[str, Any]:
+def parse_pr(payload_ascii: str) -> dict[str, Any]:
     """
-    Parse a Memory Register read message.
+    Parse a Parameter read message.
     
     Args:
         payload_ascii: The ASCII payload to parse
@@ -20,7 +20,7 @@ def parse_mr(payload_ascii: str) -> dict[str, Any]:
         A dictionary with the parsed message
     """
     result = {
-        "what": MR_TYPE,
+        "what": PR_TYPE,
         "address": None,
         "size": None,
         "data": payload_ascii
@@ -47,9 +47,9 @@ def parse_mr(payload_ascii: str) -> dict[str, Any]:
     return result
 
 
-def parse_mw(payload_ascii: str) -> dict[str, Any]:
+def parse_pw(payload_ascii: str) -> dict[str, Any]:
     """
-    Parse a Memory Register write message.
+    Parse a Parameter write message.
     
     Args:
         payload_ascii: The ASCII payload to parse
@@ -58,7 +58,7 @@ def parse_mw(payload_ascii: str) -> dict[str, Any]:
         A dictionary with the parsed message
     """
     result = {
-        "what": MW_TYPE,
+        "what": PW_TYPE,
         "address": None,
         "size": None,
         "data": payload_ascii

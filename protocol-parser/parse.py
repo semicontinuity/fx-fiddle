@@ -12,10 +12,10 @@ from collections import OrderedDict
 
 from parsers.constants import *
 from parsers.common import hex_to_bytes, is_host, bytes_to_hex_space_separated, parse_enq_ack
-from parsers.data_register import parse_dr, parse_dw
-from parsers.memory_register import parse_mr, parse_mw
+from parsers.param import parse_pr, parse_pw
+from parsers.flash import parse_fr, parse_fw
 from parsers.bit_operations import parse_bs, parse_bc
-from parsers.plc_info import parse_typ, parse_ver
+from parsers.memory import parse_mr, parse_mw
 from parsers.unknown import parse_unknown, parse_unknown_bytes
 
 
@@ -53,27 +53,28 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
                 "what": UNK_TYPE,
                 "address": None,
                 "size": None,
+                "comment": None,
+                "data": payload_ascii,
                 "sum": checksum_ascii,
-                "data": payload_ascii
             }
 
             # If this is a PLC response to a request, use the same "what" value
-            if who == "plc" and request_type in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
+            if who == "plc" and request_type in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
                 result["what"] = request_type
                 return result
             
             # Check for specific message types based on prefixes
-            if payload_ascii.startswith(DR_PREFIX):
-                return {**result, **parse_dr(payload_ascii)}
+            if payload_ascii.startswith(PR_PREFIX):
+                return {**result, **parse_pr(payload_ascii)}
             
-            elif payload_ascii.startswith(DW_PREFIX):
-                return {**result, **parse_dw(payload_ascii)}
+            elif payload_ascii.startswith(PW_PREFIX):
+                return {**result, **parse_pw(payload_ascii)}
             
-            elif payload_ascii.startswith(MR_PREFIX):
-                return {**result, **parse_mr(payload_ascii)}
+            elif payload_ascii.startswith(FR_PREFIX):
+                return {**result, **parse_fr(payload_ascii)}
             
-            elif payload_ascii.startswith(MW_PREFIX):
-                return {**result, **parse_mw(payload_ascii)}
+            elif payload_ascii.startswith(FW_PREFIX):
+                return {**result, **parse_fw(payload_ascii)}
             
             elif payload_ascii.startswith(BS_PREFIX):
                 return {**result, **parse_bs(payload_ascii)}
@@ -81,11 +82,11 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
             elif payload_ascii.startswith(BC_PREFIX):
                 return {**result, **parse_bc(payload_ascii)}
             
-            elif payload_ascii == TYP_PAYLOAD:
-                return {**result, **parse_typ(payload_ascii)}
+            elif payload_ascii.startswith(MR_PREFIX):
+                return {**result, **parse_mr(payload_ascii)}
             
-            elif payload_ascii == VER_PAYLOAD:
-                return {**result, **parse_ver(payload_ascii)}
+            elif payload_ascii.startswith(MW_PREFIX):
+                return {**result, **parse_mw(payload_ascii)}
             
             # Unknown message
             return {**result, **parse_unknown(payload_ascii)}
@@ -167,7 +168,7 @@ def main() -> None:
                     result["capdata"] = bytes_to_hex_space_separated(pending_bytes)
                     
                     # Update last_host_request if this is a host request
-                    if who == "host" and parsed["what"] in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
+                    if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
                         last_host_request = parsed["what"]
                     
                     # Output as JSON line
@@ -214,7 +215,7 @@ def main() -> None:
                 result["capdata"] = bytes_to_hex_space_separated(capdata_bytes)
                 
                 # Update last_host_request if this is a host request
-                if who == "host" and parsed["what"] in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
+                if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
                     last_host_request = parsed["what"]
                 
                 # Output as JSON line

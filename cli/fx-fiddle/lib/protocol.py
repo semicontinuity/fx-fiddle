@@ -64,7 +64,7 @@ def calculate_checksum(payload: bytes) -> bytes:
     return bytes([checksum_hi, checksum_lo])
 
 
-def read_response(port: serial.Serial, timeout: float = 2.0) -> bytes:
+def read_response(port: serial.Serial, timeout: float = 5.0) -> bytes:
     """
     Read a response from the PLC with timeout.
     

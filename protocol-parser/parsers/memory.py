@@ -6,7 +6,7 @@ Parser for Memory (MR and MW) messages.
 
 from typing import Any
 from .constants import *
-from .common import extract_values_from_payload
+from .common import extract_values_from_payload, extract_address_and_size
 
 
 def parse_mr(payload_ascii: str) -> dict[str, Any]:
@@ -28,13 +28,13 @@ def parse_mr(payload_ascii: str) -> dict[str, Any]:
     
     # Check for special payloads (TYP and VER)
     if payload_ascii == TYP_PAYLOAD:
-        result["address"] = "00E0"
+        result["address"] = "0E02"
         result["size"] = "02"
         result["comment"] = "PLC Type"
         return result
     
     elif payload_ascii == VER_PAYLOAD:
-        result["address"] = "00EC"
+        result["address"] = "0ECA"
         result["size"] = "02"
         result["comment"] = "PLC Version"
         return result
@@ -43,12 +43,10 @@ def parse_mr(payload_ascii: str) -> dict[str, Any]:
     if len(payload_ascii) >= 1 and payload_ascii[0] == '0':
         if len(payload_ascii) >= 7:  # '0' + 4 chars for address + 2 chars for size
             # Extract address and size
-            address_hex = payload_ascii[1:5]
-            size_hex = payload_ascii[5:7]
+            address_hex, _, size_int = extract_address_and_size(payload_ascii, 1)
             result["address"] = address_hex
             
             # Convert size to hex string
-            size_int = int(size_hex, 16)
             result["size"] = f"{size_int:02X}"
             
             # For responses, extract values
@@ -81,12 +79,10 @@ def parse_mw(payload_ascii: str) -> dict[str, Any]:
     if len(payload_ascii) >= 1 and payload_ascii[0] == '1':
         if len(payload_ascii) >= 7:  # '1' + 4 chars for address + 2 chars for size
             # Extract address and size
-            address_hex = payload_ascii[1:5]
-            size_hex = payload_ascii[5:7]
+            address_hex, _, size_int = extract_address_and_size(payload_ascii, 1)
             result["address"] = address_hex
             
             # Size is already in bytes for write commands
-            size_int = int(size_hex, 16)
             result["size"] = f"{size_int:02X}"
             
             # Extract values

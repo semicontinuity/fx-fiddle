@@ -6,7 +6,7 @@ Parser for Parameter (PR and PW) messages.
 
 from typing import Any, List
 from .constants import *
-from .common import extract_values_from_payload
+from .common import extract_values_from_payload, extract_address_and_size
 
 
 def parse_pr(payload_ascii: str) -> dict[str, Any]:
@@ -28,14 +28,8 @@ def parse_pr(payload_ascii: str) -> dict[str, Any]:
     
     if len(payload_ascii) >= 9:
         # Extract address and size
-        address_hex = payload_ascii[3:7]
-        size_hex = payload_ascii[7:9]
+        address_hex, _, size_bytes = extract_address_and_size(payload_ascii, 3)
         result["address"] = address_hex
-        
-        # Convert size to integer and then to hex string
-        size_int = int(size_hex, 16)
-        # Size is in words, convert to bytes (2 bytes per word)
-        size_bytes = size_int * 2
         result["size"] = f"{size_bytes:02X}"
         
         # For responses, extract values
@@ -66,12 +60,10 @@ def parse_pw(payload_ascii: str) -> dict[str, Any]:
     
     if len(payload_ascii) >= 9:
         # Extract address and size
-        address_hex = payload_ascii[3:7]
-        size_hex = payload_ascii[7:9]
+        address_hex, _, size_int = extract_address_and_size(payload_ascii, 3)
         result["address"] = address_hex
         
         # Size is already in bytes for write commands
-        size_int = int(size_hex, 16)
         result["size"] = f"{size_int:02X}"
         
         # Extract values

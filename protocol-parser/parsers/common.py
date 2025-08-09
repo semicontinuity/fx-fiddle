@@ -5,7 +5,7 @@ Common functions for the protocol parser.
 """
 
 import binascii
-from typing import Any, Optional, List
+from typing import Any, Optional
 from .constants import *
 
 
@@ -63,3 +63,20 @@ def extract_values_from_payload(payload_ascii: str, start_index: int = 0) -> lis
                 pass
     
     return values
+
+
+def extract_address_and_size(payload_ascii: str, offset: int) -> tuple[str, str, int]:
+    """
+    Extracts the address and size from a payload.
+    
+    Args:
+        payload_ascii: The ASCII payload to parse
+        offset: The offset to start parsing from
+        
+    Returns:
+        A tuple containing the address, size, and size in bytes
+    """
+    address_hex = payload_ascii[offset:offset+4]
+    size_hex = payload_ascii[offset+4:offset+6]
+    size_int = int(size_hex, 16)
+    return address_hex, size_hex, size_int

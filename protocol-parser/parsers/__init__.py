@@ -4,6 +4,8 @@
 Parsers for the protocol parser.
 """
 
+# Import all modules
+from .constants import *
 from .common import *
 from .data_register import *
 from .memory_register import *

@@ -6,7 +6,7 @@ Common functions for the protocol parser.
 
 import binascii
 from typing import Any, Optional, List
-from ..constants import *
+from .constants import *
 
 
 def hex_to_bytes(hex_str: str) -> bytes:
@@ -34,7 +34,7 @@ def parse_enq_ack(capdata_bytes: bytes) -> Optional[dict[str, Any]]:
     return None
 
 
-def extract_values_from_payload(payload_ascii: str, start_index: int = 0) -> List[int]:
+def extract_values_from_payload(payload_ascii: str, start_index: int = 0) -> list[int]:
     """
     Extract values from a payload.
     

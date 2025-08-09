@@ -5,7 +5,7 @@ Parser for Memory Register (MR and MW) messages.
 """
 
 from typing import Any, List
-from ..constants import *
+from .constants import *
 from .common import extract_values_from_payload
 
 

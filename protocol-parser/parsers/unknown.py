@@ -5,7 +5,7 @@ Parser for unknown messages.
 """
 
 from typing import Any, Optional
-from ..constants import *
+from .constants import *
 
 
 def parse_unknown(payload_ascii: str) -> dict[str, Any]:

@@ -10,7 +10,7 @@ import binascii
 from typing import Any, Optional, List, Tuple
 from collections import OrderedDict
 
-from constants import *
+from parsers.constants import *
 from parsers.common import hex_to_bytes, is_host, bytes_to_hex_space_separated, parse_enq_ack
 from parsers.data_register import parse_dr, parse_dw
 from parsers.memory_register import parse_mr, parse_mw

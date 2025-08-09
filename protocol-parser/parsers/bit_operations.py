@@ -5,7 +5,7 @@ Parser for Bit Operations (BS and BC) messages.
 """
 
 from typing import Any, Optional
-from ..constants import *
+from .constants import *
 
 
 def parse_bs(payload_ascii: str) -> dict[str, Any]:

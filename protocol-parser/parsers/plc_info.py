@@ -5,7 +5,7 @@ Parser for PLC Information (TYP and VER) messages.
 """
 
 from typing import Any, Optional
-from ..constants import *
+from .constants import *
 
 
 def parse_typ(payload_ascii: str) -> dict[str, Any]:

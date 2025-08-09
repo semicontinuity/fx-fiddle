@@ -603,3 +603,158 @@ class FxProtocol:
         # Just check that we got a response
         if not response and not self.dry_run:
             raise ValueError("No response received from PLC")
+            
+    def write_flash(self, address: int, values: List[int]) -> None:
+        """
+        Write flash memory to the PLC.
+        
+        Args:
+            address: The starting address to write to
+            values: The list of word values to write
+            
+        Raises:
+            ValueError: If communication fails or response is invalid
+            TimeoutError: If no response is received within the timeout
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: 'E11' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE) + (2*SIZE hex ASCII chars for VALUES)
+        payload = bytearray(b'E11')
+        
+        # Add address (4 hex ASCII chars)
+        address_chars = int_to_hex_chars(address, 4)
+        payload.extend(address_chars)
+        
+        # Add size (2 hex ASCII chars) - SIZE is in bytes (2 bytes per register)
+        byte_size = len(values) * 2  # Each 16-bit register is 2 bytes
+        size_chars = int_to_hex_chars(byte_size, 2)
+        payload.extend(size_chars)
+        
+        # Add values (each value is 4 hex ASCII chars, low-endian)
+        for value in values:
+            # Convert to 4 hex ASCII chars (2 bytes)
+            # Low byte first, then high byte (low-endian)
+            low_byte = value & 0xFF
+            high_byte = (value >> 8) & 0xFF
+            
+            # Add low byte (2 hex ASCII chars)
+            low_byte_chars = int_to_hex_chars(low_byte, 2)
+            payload.extend(low_byte_chars)
+            
+            # Add high byte (2 hex ASCII chars)
+            high_byte_chars = int_to_hex_chars(high_byte, 2)
+            payload.extend(high_byte_chars)
+        
+        # Send command and get response
+        response = self.send_command(payload)
+        
+        # For now, we don't parse the response as it's TBD in the protocol spec
+        # Just check that we got a response
+        if not response and not self.dry_run:
+            raise ValueError("No response received from PLC")
+            
+    def read_dev(self, address: int, size: int) -> List[int]:
+        """
+        Read device memory from the PLC.
+        
+        Args:
+            address: The starting address to read from
+            size: The number of words to read
+            
+        Returns:
+            A list of word values read from device memory
+            
+        Raises:
+            ValueError: If communication fails or response is invalid
+            TimeoutError: If no response is received within the timeout
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: '0' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE)
+        payload = bytearray(b'0')
+        
+        # Add address (4 hex ASCII chars)
+        address_chars = int_to_hex_chars(address, 4)
+        payload.extend(address_chars)
+        
+        # Add size (2 hex ASCII chars)
+        size_chars = int_to_hex_chars(size, 2)
+        payload.extend(size_chars)
+        
+        # Send command and get response
+        response = self.send_command(payload)
+        
+        # Parse response as hex ASCII chars representing words
+        values = []
+        for i in range(0, len(response), 4):
+            if i + 4 <= len(response):
+                # Extract high and low bytes (each 2 ASCII chars)
+                high_byte_str = response[i:i+2].decode('ascii')
+                low_byte_str = response[i+2:i+4].decode('ascii')
+                
+                # Swap high and low bytes
+                word_str = low_byte_str + high_byte_str
+                
+                # Convert to integer
+                word_value = int(word_str, 16)
+                values.append(word_value)
+        
+        return values
+            
+    def write_dev(self, address: int, values: List[int]) -> None:
+        """
+        Write device memory to the PLC.
+        
+        Args:
+            address: The starting address to write to
+            values: The list of word values to write
+            
+        Raises:
+            ValueError: If communication fails or response is invalid
+            TimeoutError: If no response is received within the timeout
+        """
+        # Start communication
+        if not self.start_communication():
+            raise ValueError("Failed to establish communication with PLC")
+        
+        # Create request payload
+        # Format: '1' + (4 hex ASCII chars for ADDRESS) + (2 hex ASCII chars for SIZE) + (2*SIZE hex ASCII chars for VALUES)
+        payload = bytearray(b'1')
+        
+        # Add address (4 hex ASCII chars)
+        address_chars = int_to_hex_chars(address, 4)
+        payload.extend(address_chars)
+        
+        # Add size (2 hex ASCII chars) - SIZE is in bytes (2 bytes per register)
+        byte_size = len(values) * 2  # Each 16-bit register is 2 bytes
+        size_chars = int_to_hex_chars(byte_size, 2)
+        payload.extend(size_chars)
+        
+        # Add values (each value is 4 hex ASCII chars, low-endian)
+        for value in values:
+            # Convert to 4 hex ASCII chars (2 bytes)
+            # Low byte first, then high byte (low-endian)
+            low_byte = value & 0xFF
+            high_byte = (value >> 8) & 0xFF
+            
+            # Add low byte (2 hex ASCII chars)
+            low_byte_chars = int_to_hex_chars(low_byte, 2)
+            payload.extend(low_byte_chars)
+            
+            # Add high byte (2 hex ASCII chars)
+            high_byte_chars = int_to_hex_chars(high_byte, 2)
+            payload.extend(high_byte_chars)
+        
+        # Send command and get response
+        response = self.send_command(payload)
+        
+        # For now, we don't parse the response as it's TBD in the protocol spec
+        # Just check that we got a response
+        if not response and not self.dry_run:
+            raise ValueError("No response received from PLC")

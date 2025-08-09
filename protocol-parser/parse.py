@@ -1,39 +1,31 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+Main parser for the protocol.
+"""
 
 import json
 import sys
 import binascii
+from typing import Any, Optional, List, Tuple
 from collections import OrderedDict
 
+from constants import *
+from parsers.common import hex_to_bytes, is_host, bytes_to_hex_space_separated, parse_enq_ack
+from parsers.data_register import parse_dr, parse_dw
+from parsers.memory_register import parse_mr, parse_mw
+from parsers.bit_operations import parse_bs, parse_bc
+from parsers.plc_info import parse_typ, parse_ver
+from parsers.unknown import parse_unknown, parse_unknown_bytes
 
-# Protocol constants
-ENQ = 0x05  # Enquiry
-ACK = 0x06  # Acknowledge
-STX = 0x02  # Start of Text
-ETX = 0x03  # End of Text
 
-def hex_to_bytes(hex_str):
-    """Convert a hex string to bytes."""
-    return binascii.unhexlify(hex_str)
-
-def is_host(src):
-    """Check if the source is the host."""
-    return src == "host"
-
-def bytes_to_hex_space_separated(data):
-    """Convert bytes to a space-separated hex string."""
-    return ' '.join([f"{b:02X}" for b in data])
-
-def parse_message(capdata_bytes, request_type=None, who=None):
+def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who: Optional[str] = None) -> dict[str, Any]:
     """Parse a message based on its content."""
+    # Check for single byte message (ENQ or ACK)
     if len(capdata_bytes) == 1:
-        # Single byte message
-        if capdata_bytes[0] == ENQ:
-            return {"what": "ENQ", "address": None, "size": None}
-        elif capdata_bytes[0] == ACK:
-            # Always set what='ACK' for ACK responses
-            return {"what": "ACK", "address": None, "size": None}
+        result = parse_enq_ack(capdata_bytes)
+        if result:
+            return result
         # For other single-byte messages, use U_XX format
         return {"what": f"U_{capdata_bytes[0]:02X}", "address": None, "size": None}
     
@@ -58,7 +50,7 @@ def parse_message(capdata_bytes, request_type=None, who=None):
 
             # Initialize result with default values
             result = {
-                "what": "UNK",
+                "what": UNK_TYPE,
                 "address": None,
                 "size": None,
                 "sum": checksum_ascii,
@@ -66,204 +58,43 @@ def parse_message(capdata_bytes, request_type=None, who=None):
             }
 
             # If this is a PLC response to a request, use the same "what" value
-            if who == "plc" and request_type in ["DR", "MR", "TYP", "VER"]:
+            if who == "plc" and request_type in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
                 result["what"] = request_type
-            else:
-                # Determine message type based on payload
-                if len(payload) >= 3:
-                    if payload_ascii.startswith("E00"):
-                        # Data Register read
-                        result["what"] = "DR"
-                        if len(payload) >= 9:
-                            # Extract address and size
-                            address_hex = payload_ascii[3:7]
-                            size_hex = payload_ascii[7:9]
-                            result["address"] = address_hex
-                            
-                            # Convert size to integer and then to hex string
-                            size_int = int(size_hex, 16)
-                            # Size is in words, convert to bytes (2 bytes per word)
-                            size_bytes = size_int * 2
-                            result["size"] = f"{size_bytes:02X}"
-                            
-                            # For responses, extract values
-                            if len(payload) > 9:
-                                values = []
-                                for i in range(9, len(payload_ascii), 4):
-                                    if i + 4 <= len(payload_ascii):
-                                        # Extract high and low bytes (each 2 ASCII chars)
-                                        high_byte_str = payload_ascii[i:i+2]
-                                        low_byte_str = payload_ascii[i+2:i+4]
-                                        
-                                        # Swap high and low bytes (low-endian)
-                                        word_str = low_byte_str + high_byte_str
-                                        
-                                        # Convert to integer
-                                        try:
-                                            word_value = int(word_str, 16)
-                                            values.append(word_value)
-                                        except ValueError:
-                                            pass
-                                
-                                if values:
-                                    result["values"] = values
-                    
-                    elif payload_ascii.startswith("E01"):
-                        # Memory Register read
-                        result["what"] = "MR"
-                        if len(payload) >= 9:
-                            # Extract address and size
-                            address_hex = payload_ascii[3:7]
-                            size_hex = payload_ascii[7:9]
-                            result["address"] = address_hex
-                            
-                            # Convert size to integer and then to hex string
-                            size_int = int(size_hex, 16)
-                            # Size is in words, convert to bytes (2 bytes per word)
-                            size_bytes = size_int * 2
-                            result["size"] = f"{size_bytes:02X}"
-                            
-                            # For responses, extract values
-                            if len(payload) > 9:
-                                values = []
-                                for i in range(9, len(payload_ascii), 4):
-                                    if i + 4 <= len(payload_ascii):
-                                        # Extract high and low bytes (each 2 ASCII chars)
-                                        high_byte_str = payload_ascii[i:i+2]
-                                        low_byte_str = payload_ascii[i+2:i+4]
-                                        
-                                        # Swap high and low bytes (low-endian)
-                                        word_str = low_byte_str + high_byte_str
-                                        
-                                        # Convert to integer
-                                        try:
-                                            word_value = int(word_str, 16)
-                                            values.append(word_value)
-                                        except ValueError:
-                                            pass
-                                
-                                if values:
-                                    result["values"] = values
-                        
-                    elif payload_ascii.startswith("E10"):
-                        # Data Register write
-                        result["what"] = "DW"
-                        if len(payload) >= 9:
-                            # Extract address and size
-                            address_hex = payload_ascii[3:7]
-                            size_hex = payload_ascii[7:9]
-                            result["address"] = address_hex
-                            
-                            # Size is already in bytes for write commands
-                            size_int = int(size_hex, 16)
-                            result["size"] = f"{size_int:02X}"
-                            
-                            # Extract values
-                            values = []
-                            for i in range(9, len(payload_ascii), 4):
-                                if i + 4 <= len(payload_ascii):
-                                    # Extract high and low bytes (each 2 ASCII chars)
-                                    high_byte_str = payload_ascii[i:i+2]
-                                    low_byte_str = payload_ascii[i+2:i+4]
-                                    
-                                    # Swap high and low bytes (low-endian)
-                                    word_str = low_byte_str + high_byte_str
-                                    
-                                    # Convert to integer
-                                    try:
-                                        word_value = int(word_str, 16)
-                                        values.append(word_value)
-                                    except ValueError:
-                                        pass
-                            
-                            if values:
-                                result["values"] = values
-                    
-                    elif payload_ascii.startswith("E11"):
-                        # Memory Register write
-                        result["what"] = "MW"
-                        if len(payload) >= 9:
-                            # Extract address and size
-                            address_hex = payload_ascii[3:7]
-                            size_hex = payload_ascii[7:9]
-                            result["address"] = address_hex
-                            
-                            # Size is already in bytes for write commands
-                            size_int = int(size_hex, 16)
-                            result["size"] = f"{size_int:02X}"
-                            
-                            # Extract values
-                            values = []
-                            for i in range(9, len(payload_ascii), 4):
-                                if i + 4 <= len(payload_ascii):
-                                    # Extract high and low bytes (each 2 ASCII chars)
-                                    high_byte_str = payload_ascii[i:i+2]
-                                    low_byte_str = payload_ascii[i+2:i+4]
-                                    
-                                    # Swap high and low bytes (low-endian)
-                                    word_str = low_byte_str + high_byte_str
-                                    
-                                    # Convert to integer
-                                    try:
-                                        word_value = int(word_str, 16)
-                                        values.append(word_value)
-                                    except ValueError:
-                                        pass
-                            
-                            if values:
-                                result["values"] = values
-                    # Check for TYP (PLC type) command
-                    elif payload_ascii == "00E0202":
-                        result["what"] = "TYP"
-                    # Check for VER (PLC version) command
-                    elif payload_ascii == "00ECA02":
-                        result["what"] = "VER"
-                    # Check for BS (Bit Set) command
-                    elif payload_ascii.startswith("E7") and len(payload_ascii) >= 5:
-                        result["what"] = "BS"
-                        # Extract word address (lo-endian)
-                        if len(payload_ascii) >= 5:
-                            # Get the address part (2 bytes after "E7")
-                            address_lo = payload_ascii[2:4]
-                            address_hi = payload_ascii[4:6] if len(payload_ascii) >= 6 else "00"
-                            # Combine in correct order (lo-endian)
-                            address_hex = address_hi + address_lo
-                            result["address"] = address_hex
-                    # Check for BC (Bit Clear) command
-                    elif payload_ascii.startswith("E8") and len(payload_ascii) >= 5:
-                        result["what"] = "BC"
-                        # Extract word address (lo-endian)
-                        if len(payload_ascii) >= 5:
-                            # Get the address part (2 bytes after "E8")
-                            address_lo = payload_ascii[2:4]
-                            address_hi = payload_ascii[4:6] if len(payload_ascii) >= 6 else "00"
-                            # Combine in correct order (lo-endian)
-                            address_hex = address_hi + address_lo
-                            result["address"] = address_hex
-                    else:
-                        # For unknown commands, use U_XX format with first 2 chars of payload
-                        prefix = payload_ascii[:2] if len(payload_ascii) >= 2 else payload_ascii.ljust(2, '0')
-                        result["what"] = f"U_{prefix}"
-                else:
-                    # For unknown commands with short payload, use U_XX format with available chars
-                    prefix = payload_ascii.ljust(2, '0')[:2]
-                    result["what"] = f"U_{prefix}"
-
-            return result
+                return result
+            
+            # Check for specific message types based on prefixes
+            if payload_ascii.startswith(DR_PREFIX):
+                return {**result, **parse_dr(payload_ascii)}
+            
+            elif payload_ascii.startswith(DW_PREFIX):
+                return {**result, **parse_dw(payload_ascii)}
+            
+            elif payload_ascii.startswith(MR_PREFIX):
+                return {**result, **parse_mr(payload_ascii)}
+            
+            elif payload_ascii.startswith(MW_PREFIX):
+                return {**result, **parse_mw(payload_ascii)}
+            
+            elif payload_ascii.startswith(BS_PREFIX):
+                return {**result, **parse_bs(payload_ascii)}
+            
+            elif payload_ascii.startswith(BC_PREFIX):
+                return {**result, **parse_bc(payload_ascii)}
+            
+            elif payload_ascii == TYP_PAYLOAD:
+                return {**result, **parse_typ(payload_ascii)}
+            
+            elif payload_ascii == VER_PAYLOAD:
+                return {**result, **parse_ver(payload_ascii)}
+            
+            # Unknown message
+            return {**result, **parse_unknown(payload_ascii)}
     
     # Unknown message type with no payload
-    if len(capdata_bytes) > 1:
-        # Try to get first two bytes after STX if present
-        start_idx = 1 if capdata_bytes[0] == STX else 0
-        if start_idx + 2 <= len(capdata_bytes):
-            prefix = capdata_bytes[start_idx:start_idx+2].decode('ascii', errors='replace')
-        else:
-            prefix = capdata_bytes[start_idx:].decode('ascii', errors='replace').ljust(2, '0')
-        return {"what": f"U_{prefix}", "address": None, "size": None}
-    else:
-        return {"what": "U_00", "address": None, "size": None}
+    return parse_unknown_bytes(capdata_bytes)
 
-def main():
+
+def main() -> None:
     if len(sys.argv) != 2:
         print("Usage: python parse.py <input_json_file>")
         sys.exit(1)
@@ -278,8 +109,8 @@ def main():
         sys.exit(1)
     
     # Process records
-    pending_frames = {}  # Store incomplete frames by source
-    last_host_request = None  # Track the last request type from host
+    pending_frames: dict[str, dict[str, bytes]] = {}  # Store incomplete frames by source
+    last_host_request: Optional[str] = None  # Track the last request type from host
     
     for record in data:
         if "layers" not in record["_source"]:
@@ -336,7 +167,7 @@ def main():
                     result["capdata"] = bytes_to_hex_space_separated(pending_bytes)
                     
                     # Update last_host_request if this is a host request
-                    if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
+                    if who == "host" and parsed["what"] in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
                         last_host_request = parsed["what"]
                     
                     # Output as JSON line
@@ -383,11 +214,12 @@ def main():
                 result["capdata"] = bytes_to_hex_space_separated(capdata_bytes)
                 
                 # Update last_host_request if this is a host request
-                if who == "host" and parsed["what"] in ["DR", "MR", "TYP", "VER", "BS", "BC"]:
+                if who == "host" and parsed["what"] in [DR_TYPE, MR_TYPE, TYP_TYPE, VER_TYPE, BS_TYPE, BC_TYPE]:
                     last_host_request = parsed["what"]
                 
                 # Output as JSON line
                 print(json.dumps(result))
+
 
 if __name__ == "__main__":
     main()

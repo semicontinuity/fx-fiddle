@@ -5,8 +5,8 @@ import click
 
 from .bit import bit
 from .flash import flash
-from .dev import dev
 from .param import param
+from .memory import memory
 
 
 @click.group()
@@ -16,8 +16,8 @@ def cli():
 
 cli.add_command(bit)
 cli.add_command(flash)
-cli.add_command(dev)
 cli.add_command(param)
+cli.add_command(memory)
 
 
 if __name__ == "__main__":

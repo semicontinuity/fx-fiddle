@@ -8,14 +8,7 @@ import sys
 import click
 
 from . import option_port
-from ...lib.protocol import FxProtocol
-
-
-def parse_int_or_hex(value: str) -> int:
-    """Parse a string as decimal or hex (with 0x prefix)."""
-    if value.lower().startswith('0x'):
-        return int(value, 16)
-    return int(value)
+from ...lib.protocol import FxProtocol, parse_int_or_hex
 
 
 @click.command()

@@ -8,14 +8,7 @@ import sys
 import click
 
 from . import option_port
-from ...lib.protocol import FxProtocol
-
-
-def parse_int_or_hex(value: str) -> int:
-    """Parse a string as decimal or hex (with 0x prefix)."""
-    if value.lower().startswith('0x'):
-        return int(value, 16)
-    return int(value)
+from ...lib.protocol import FxProtocol, parse_int_or_hex
 
 
 @click.command()
@@ -24,7 +17,7 @@ def parse_int_or_hex(value: str) -> int:
 @click.option("--size", required=True, help="Number of words to read (decimal or hex with 0x prefix)")
 @click.option("--dry-run", is_flag=True, help="Print request to console only, don't send it")
 @click.option("--verbose", is_flag=True, help="Print detailed information about the communication")
-def dev_read_d(
+def memory_read(
         port: str,
         address: str,
         size: str,

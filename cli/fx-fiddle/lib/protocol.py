@@ -19,6 +19,13 @@ STX = 0x02  # Start of Text
 ETX = 0x03  # End of Text
 
 
+def parse_int_or_hex(value: str) -> int:
+    """Parse a string as decimal or hex (with 0x prefix)."""
+    if value.lower().startswith('0x'):
+        return int(value, 16)
+    return int(value)
+
+
 def hex_char(n: int) -> int:
     """Convert a nibble to its ASCII hex representation."""
     return 0x30 + n if n < 10 else 0x41 + n - 10

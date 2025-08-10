@@ -126,7 +126,7 @@ def read(
                 
                 if not dry_run and values:
                     # Check for termination
-                    if len(values) >= 1 and values[-1] == 0xFFFF:
+                    while len(values) >= 1 and values[-1] == 0xFFFF:
                         should_continue = False
                         values = values[:-1]
                     

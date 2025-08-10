@@ -5,10 +5,12 @@ Commands for program body operations with comprehensive FX2N PLC instruction dec
 """
 
 import sys
+from typing import Tuple, List
+
 import click
-from typing import Tuple, List, Dict
-from ...lib.protocol import FxProtocol
+
 from . import option_port
+from ...lib.protocol import FxProtocol
 
 # FX2N instruction set mapping with detailed decoding
 FX2N_INSTRUCTIONS = {
@@ -101,12 +103,13 @@ def decode_fx2n_instruction(word: int) -> Tuple[str, List[str]]:
     
     return (f"UNK_{opcode:02X}", [f"0x{operand:02X}"])
 
+
 @click.command()
 @option_port
 @click.option("--dry-run", is_flag=True, help="Print request to console only, don't send it")
 @click.option("--verbose", is_flag=True, help="Print detailed information about the communication")
 @click.option("--decode", is_flag=True, help="Decode instructions in IL format with arguments")
-def read(
+def program_body_read(
         port: str,
         dry_run: bool,
         verbose: bool,

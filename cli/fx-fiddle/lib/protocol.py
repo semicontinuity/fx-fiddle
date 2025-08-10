@@ -7,11 +7,11 @@ This module provides functions and classes for communicating with an FX3U PLC
 using the serial protocol described in the documentation.
 """
 
-import time
-import serial
-from typing import List, Tuple, Optional
 import re
+import time
+from typing import List, Tuple
 
+import serial
 
 # Protocol constants
 ENQ = 0x05  # Enquiry
@@ -551,7 +551,7 @@ class FxProtocol:
         
         return values
     
-    def read_flash(self, address: int, size: int) -> List[int]:
+    def read_flash(self, address: int, size: int) -> list[int]:
         """
         Read flash memory from the PLC.
         

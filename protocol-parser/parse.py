@@ -76,10 +76,10 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
             elif payload_ascii.startswith(FW_PREFIX):
                 return {**result, **parse_fw(payload_ascii)}
             
-            elif payload_ascii.startswith(BS_PREFIX):
+            elif payload_ascii.startswith(EBS_PREFIX) or payload_ascii.startswith(EBS_PREFIX):
                 return {**result, **parse_bs(payload_ascii)}
             
-            elif payload_ascii.startswith(BC_PREFIX):
+            elif payload_ascii.startswith(BC_PREFIX) or payload_ascii.startswith(EBC_PREFIX):
                 return {**result, **parse_bc(payload_ascii)}
             
             elif payload_ascii.startswith(MR_PREFIX):

@@ -10,6 +10,7 @@ using the serial protocol described in the documentation.
 import time
 import serial
 from typing import List, Tuple, Optional
+import re
 
 
 # Protocol constants
@@ -20,10 +21,52 @@ ETX = 0x03  # End of Text
 
 
 def parse_int_or_hex(value: str) -> int:
-    """Parse a string as decimal or hex (with 0x prefix)."""
+    """Parse a string as decimal or hex."""
     if value.lower().startswith('0x'):
         return int(value, 16)
-    return int(value)
+    try:
+        return int(value)
+    except ValueError:
+        return int(value, 16)
+
+
+BIT_ADDR_MAP = {
+    'M': 0x4000,
+    'Y': 0x5E00,
+    'X': 0x0240
+}
+
+def translate_address(address: str) -> str:
+    """
+    Translates a logical address (e.g., M0, Y1) to a physical address.
+    
+    Args:
+        address: The logical address to translate
+        
+    Returns:
+        The physical address in hex format
+    """
+    match = re.match(r'([MYX])(\d+)', address.upper())
+    if match:
+        reg_type = match.group(1)
+        reg_num_str = match.group(2)
+        
+        # Convert register number from octal to decimal for Y and X registers
+        if reg_type in ['Y', 'X']:
+            reg_num = int(reg_num_str, 8)
+        else:
+            reg_num = int(reg_num_str)
+        
+        if reg_type in BIT_ADDR_MAP:
+            base_address = BIT_ADDR_MAP[reg_type]
+            physical_address = base_address + reg_num
+            return f"{physical_address:04X}"
+    
+    # If the address is already in hex format, return it as is
+    if re.match(r'^[0-9A-FA-F]+$', address.upper()):
+        return address.upper()
+    
+    return address
 
 
 def hex_char(n: int) -> int:

@@ -15,3 +15,15 @@ The following table describes the different sections of the device's RAM, which 
 | D Registers (Retentive)  | 43E8 - 4745                 | Word     | 450 Words  | General-purpose 16-bit data registers D500 to D949. These values are backed up to and restored from Flash. |
 
 The standard timers and counters, like their retentive counterparts, are word-addressable. Reading or writing to them should use an even protocol address and a data size that is a multiple of 2.
+
+
+## Bit Device address map
+
+These are addresses used in bit operations
+
+| Memory Area              | Starting Address
+|--------------------------|-----------------
+| M Coils (General)        | 4000
+| Y Outputs                | 5E00
+
+**Note:** The register numbers for `X` and `Y` I/O are specified in octal format.

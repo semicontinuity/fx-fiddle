@@ -15,10 +15,12 @@ PR_PREFIX = "E00"  # Parameter read (formerly DR)
 FR_PREFIX = "E01"  # Flash read (formerly MR)
 PW_PREFIX = "E10"  # Parameter write (formerly DW)
 FW_PREFIX = "E11"  # Flash write (formerly MW)
-BS_PREFIX = "E7"   # Bit Set
-BC_PREFIX = "E8"   # Bit Clear
+EBS_PREFIX = "E7"   # Bit Set
+EBC_PREFIX = "E8"   # Bit Clear
 MR_PREFIX = "0"    # Memory Read
 MW_PREFIX = "1"    # Memory Write
+BS_PREFIX = "7"   # Bit Set
+BC_PREFIX = "8"   # Bit Clear
 
 # Special payloads
 TYP_PAYLOAD = "00E0202"  # PLC type command

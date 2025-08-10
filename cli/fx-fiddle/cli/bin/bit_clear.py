@@ -8,12 +8,12 @@ import sys
 import click
 
 from . import option_port
-from ...lib.protocol import FxProtocol, parse_int_or_hex
+from ...lib.protocol import FxProtocol, parse_int_or_hex, translate_address
 
 
 @click.command()
 @option_port
-@click.option("--address", required=True, help="Address of the bit to clear (decimal or hex with 0x prefix)")
+@click.option("--address", required=True, help="Address of the bit to clear (e.g., Y0, M10, 0x4000)")
 @click.option("--dry-run", is_flag=True, help="Print request to console only, don't send it")
 @click.option("--verbose", is_flag=True, help="Print detailed information about the communication")
 def bit_clear(
@@ -24,8 +24,11 @@ def bit_clear(
 ):
     """Clear a bit at the specified address."""
     try:
+        # Translate logical address to physical address
+        physical_address = translate_address(address)
+        
         # Parse address
-        addr_int = parse_int_or_hex(address)
+        addr_int = parse_int_or_hex(physical_address)
         
         # Create protocol handler and clear the bit
         with FxProtocol(port, dry_run=dry_run, verbose=verbose) as protocol:

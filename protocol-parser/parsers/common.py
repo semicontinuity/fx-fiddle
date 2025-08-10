@@ -80,3 +80,20 @@ def extract_address_and_size(payload_ascii: str, offset: int) -> tuple[str, str,
     size_hex = payload_ascii[offset+4:offset+6]
     size_int = int(size_hex, 16)
     return address_hex, size_hex, size_int
+
+
+def extract_address_and_uint16(payload_ascii: str, offset: int) -> tuple[str, str]:
+    """
+    Extracts the address and value from a payload.
+
+    Args:
+        payload_ascii: The ASCII payload to parse
+        offset: The offset to start parsing from
+
+    Returns:
+        A tuple containing the address + value
+    """
+    address_hex = payload_ascii[offset:offset+4]
+    d_l = payload_ascii[offset+4:offset+6]
+    d_h = payload_ascii[offset+6:offset+8]
+    return address_hex, d_h + d_l

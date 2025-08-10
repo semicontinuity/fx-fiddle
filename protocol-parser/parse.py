@@ -13,9 +13,10 @@ from collections import OrderedDict
 from parsers.constants import *
 from parsers.common import hex_to_bytes, is_host, bytes_to_hex_space_separated, parse_enq_ack
 from parsers.param import parse_pr, parse_pw
-from parsers.flash import parse_fr, parse_fw
+from parsers.flash import parse_fr, parse_fw, parse_flash_lock, parse_flash_unlock
 from parsers.bit_operations import parse_bs, parse_bc
 from parsers.memory import parse_mr, parse_mw
+from parsers.find import parse_find
 from parsers.unknown import parse_unknown, parse_unknown_bytes
 
 
@@ -59,7 +60,7 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
             }
 
             # If this is a PLC response to a request, use the same "what" value
-            if who == "plc" and request_type in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
+            if who == "plc" and request_type in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE, FIND_TYPE, FL_TYPE, FU_TYPE]:
                 result["what"] = request_type
                 return result
             
@@ -76,10 +77,10 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
             elif payload_ascii.startswith(FW_PREFIX):
                 return {**result, **parse_fw(payload_ascii)}
             
-            elif payload_ascii.startswith(EBS_PREFIX) or payload_ascii.startswith(EBS_PREFIX):
+            elif payload_ascii.startswith(EBS_PREFIX) or payload_ascii.startswith(BS_PREFIX):
                 return {**result, **parse_bs(payload_ascii)}
             
-            elif payload_ascii.startswith(BC_PREFIX) or payload_ascii.startswith(EBC_PREFIX):
+            elif payload_ascii.startswith(EBC_PREFIX) or payload_ascii.startswith(BC_PREFIX):
                 return {**result, **parse_bc(payload_ascii)}
             
             elif payload_ascii.startswith(MR_PREFIX):
@@ -87,6 +88,15 @@ def parse_message(capdata_bytes: bytes, request_type: Optional[str] = None, who:
             
             elif payload_ascii.startswith(MW_PREFIX):
                 return {**result, **parse_mw(payload_ascii)}
+            
+            elif payload_ascii.startswith(FIND_PREFIX):
+                return {**result, **parse_find(payload_ascii)}
+            
+            elif payload_ascii.startswith(FLASH_LOCK_PREFIX_E) or payload_ascii.startswith(FLASH_LOCK_PREFIX_B):
+                return {**result, **parse_flash_lock(payload_ascii)}
+            
+            elif payload_ascii.startswith(FLASH_UNLOCK_PREFIX):
+                return {**result, **parse_flash_unlock(payload_ascii)}
             
             # Unknown message
             return {**result, **parse_unknown(payload_ascii)}
@@ -168,7 +178,7 @@ def main() -> None:
                     result["capdata"] = bytes_to_hex_space_separated(pending_bytes)
                     
                     # Update last_host_request if this is a host request
-                    if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
+                    if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE, FIND_TYPE, FL_TYPE, FU_TYPE]:
                         last_host_request = parsed["what"]
                     
                     # Output as JSON line
@@ -215,7 +225,7 @@ def main() -> None:
                 result["capdata"] = bytes_to_hex_space_separated(capdata_bytes)
                 
                 # Update last_host_request if this is a host request
-                if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE]:
+                if who == "host" and parsed["what"] in [PR_TYPE, FR_TYPE, BS_TYPE, BC_TYPE, MR_TYPE, MW_TYPE, FIND_TYPE, FL_TYPE, FU_TYPE]:
                     last_host_request = parsed["what"]
                 
                 # Output as JSON line

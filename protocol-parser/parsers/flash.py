@@ -73,3 +73,39 @@ def parse_fw(payload_ascii: str) -> dict[str, Any]:
             result["values"] = values
     
     return result
+
+
+def parse_flash_lock(payload_ascii: str) -> dict[str, Any]:
+    """
+    Parse a Flash Lock message.
+    
+    Args:
+        payload_ascii: The ASCII payload to parse
+        
+    Returns:
+        A dictionary with the parsed message
+    """
+    return {
+        "what": FL_TYPE,
+        "address": None,
+        "size": None,
+        "data": payload_ascii
+    }
+
+
+def parse_flash_unlock(payload_ascii: str) -> dict[str, Any]:
+    """
+    Parse a Flash Unlock message.
+    
+    Args:
+        payload_ascii: The ASCII payload to parse
+        
+    Returns:
+        A dictionary with the parsed message
+    """
+    return {
+        "what": FU_TYPE,
+        "address": None,
+        "size": None,
+        "data": payload_ascii
+    }

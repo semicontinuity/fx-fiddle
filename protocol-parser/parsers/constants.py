@@ -21,6 +21,10 @@ MR_PREFIX = "0"    # Memory Read
 MW_PREFIX = "1"    # Memory Write
 BS_PREFIX = "7"   # Bit Set
 BC_PREFIX = "8"   # Bit Clear
+FIND_PREFIX = "E41" # Find
+FLASH_LOCK_PREFIX_E = "E87" # Flash Lock
+FLASH_LOCK_PREFIX_B = "B"   # Flash Lock
+FLASH_UNLOCK_PREFIX = "E77" # Flash Unlock
 
 # Special payloads
 TYP_PAYLOAD = "00E0202"  # PLC type command
@@ -39,4 +43,7 @@ TYP_TYPE = "TYP"
 VER_TYPE = "VER"
 MR_TYPE = "MR"  # Memory Read
 MW_TYPE = "MW"  # Memory Write
+FIND_TYPE = "FIND"
+FL_TYPE = "FL"
+FU_TYPE = "FU"
 UNK_TYPE = "UNK"  # Unknown

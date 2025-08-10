@@ -18,6 +18,22 @@ def parse_unknown(payload_ascii: str) -> dict[str, Any]:
     Returns:
         A dictionary with the parsed message
     """
+    
+    if payload_ascii.startswith("E41"):
+        return {
+            "what": "U_41",
+            "address": payload_ascii[3:7] if len(payload_ascii) >= 7 else None,
+            "size": None,
+            "data": payload_ascii
+        }
+    elif payload_ascii.startswith("F71"):
+        return {
+            "what": "U_F71",
+            "address": payload_ascii[3:7] if len(payload_ascii) >= 7 else None,
+            "size": None,
+            "data": payload_ascii
+        }
+    
     # For unknown commands, use U_XX format with first 2 chars of payload
     prefix = payload_ascii[:2] if len(payload_ascii) >= 2 else payload_ascii.ljust(2, '0')
     

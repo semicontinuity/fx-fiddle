@@ -1,6 +1,6 @@
-# FX2N Instruction Set Architecture
+# FX3U Instruction Set Architecture
 
-This document provides a detailed specification of the FX2N PLC instruction set, reverse-engineered from firmware source code. The goal is to describe each instruction's binary format completely, down to the bit level, to enable the implementation of a disassembler or other tooling.
+This document provides a detailed specification of the FX3U PLC instruction set, reverse-engineered from firmware source code and empirical testing. The goal is to describe each instruction's binary format completely, down to the bit level, to enable the implementation of a disassembler or other tooling.
 
 ## General Principles
 
@@ -24,12 +24,12 @@ The PLC uses different memory areas for its operation. The specific memory area 
 |---|---|---|---|
 | `X` | Inputs | `X0-X377` (octal) | The physical inputs to the PLC. |
 | `Y` | Outputs | `Y0-Y377` (octal) | The physical outputs from the PLC. |
-| `M` | Internal Relays | `M0-M3071` | General-purpose internal bits. |
-| `M` (special) | Special Purpose Relays | `M8000-M8255` | Provide system status, flags, clocks. |
+| `M` | Internal Relays | `M0-M7999` | General-purpose internal bits. |
+| `M` (special) | Special Purpose Relays | `M8000-M8511` | Provide system status, flags, clocks. |
 | `S` | Step Relays (States) | `S0-S4095` | Used for SFC (Sequential Function Chart) programming. |
-| `T` | Timers | `T0-T255` | Timer coils and contacts. |
+| `T` | Timers | `T0-T511` | Timer coils and contacts. |
 | `C` | Counters | `C0-C255` | Counter coils and contacts. |
-| `D` | Data Registers | `D0-D8255` | 16-bit data registers for storing values. |
+| `D` | Data Registers | `D0-D7999` | 16-bit data registers for storing values. |
 | `P` | Pointers (Labels) | `P0-P` | Labels for `CJ` and `CALL` instructions. |
 | `K` | Constants | - | Decimal constants (e.g., `K100`). |
 | `H` | Constants | - | Hexadecimal constants (e.g., `HFF`). |
@@ -53,23 +53,14 @@ These instructions are the fundamental building blocks of ladder logic, performi
 
 The table below shows how the high byte maps to an instruction and memory area. The high byte is composed of two nibbles: `[I]O`. `[I]` is the instruction class, and `O` is the operand/memory area selector.
 
-| `O` (hex) | Mnemonic | Memory Area | Base Address |
+| `O` (hex) | Mnemonic | Memory Area | Notes |
 |---|---|---|---|
-| `0` | S | Step Relay Bank 0 | `0x0140`|
-| `1` | S | Step Relay Bank 1 | `0x0150`|
-| `2` | S | Step Relay Bank 2 | `0x0160`|
-| `3` | S | Step Relay Bank 3 | `0x0170`|
-| `4` | T | Timer (Coil) | `0x0120`|
-| `5` | Y | Output | `0x00C0`|
-| `6` | T | Timer (Contact) | `0x0100`|
-| `8` | X | Input Bank 0 | `0x0000`|
-| `9` | X | Input Bank 1 | `0x0010`|
-| `A` | X | Input Bank 2 | `0x0020`|
-| `B` | X | Input Bank 3 | `0x0030`|
-| `C` | X | Input Bank 4 | `0x0040`|
-| `D` | X | Input Bank 5 | `0x0050`|
-| `E` | C | Counter (Contact) | `0x00F0`|
-| `F` | M | Special Relay | `0x00E0`|
+| `0` | S | Step Relay | Step Relay |
+| `4` | X | Input | Physical inputs |
+| `6` | TS | Timer Status | Timer status bits |
+| `8` | M | Internal Relay | Internal relays (0-999) |
+| `C` | M | Internal Relay | Internal relays (1000-1999) |
+| `E` | CS | Counter Status | Counter status bits |
 
 ### Instruction Classes `[I]`
 
@@ -85,28 +76,23 @@ The high nibble `[I]` of the opcode byte determines the instruction itself.
 -   **`[I] = D`**: `SET`
 -   **`[I] = E`**: `RST` (Reset)
 
-### Addressing Note: Aliasing of M and X Coils
+### Addressing Note: M Relays
 
-A key aspect of this architecture is that **low-numbered `M` coils and `X` inputs are aliased**. The opcodes with an `O` nibble of `8-D` (e.g., `0x28`, `0x49`) access memory locations starting from address `0x0000`.
+In the FX3U PLC, M relays are divided into different ranges:
 
--   In the ladder logic source (what a programmer writes), these are treated as distinct `X` and `M` operands.
--   However, in the compiled code and the PLC's memory map (`all_data` array), these opcodes point to the same memory addresses. The comments in `usart_com.c` confirm that `all_data[0]` onwards is treated as `M0-M1024`.
-
-This implies the following behavior: at the start of each scan, the PLC hardware copies the state of the physical `X` inputs into the corresponding `M` coil memory locations (e.g., `X0` -> `M0`, `X1` -> `M1`). The ladder program then executes using this unified memory space.
-
-**For a disassembler, this means an instruction like `0x2805` can be interpreted as either `LD X5` or `LD M5`. Conventionally, it would be disassembled as the operand written in the source program, but functionally they are identical.**
-
-Higher-numbered `M` coils (M2048+) do not share addresses with other operands and are accessed uniquely via the two-word "Extended Bit Instructions".
+- M0-M999: Accessed with high byte 0x28 (for LD instruction)
+- M1000-M1999: Accessed with high byte 0x2C (for LD instruction)
+- M2000+: Accessed using extended bit instructions
 
 **Example: `LD X5`**
 
 This instruction loads the state of input `X5`.
 
 -   The mnemonic is `LD`, so `[I]` is `2`.
--   The operand is `X` (Input Bank 0), so from the table, `O` is `8`.
--   The high byte of the instruction is `0x28`.
+-   The operand is `X` (Input), so from the table, `O` is `4`.
+-   The high byte of the instruction is `0x24`.
 -   The bit address is `5`, so the low byte (Bit Operand Identifier) is `0x05`.
--   **Final 16-bit Instruction**: `0x2805`
+-   **Final 16-bit Instruction**: `0x2405`
 
 ## Stack and Logic Block Instructions
 
@@ -116,51 +102,45 @@ These instructions manipulate the internal logic stack, which is essential for e
 
 Pushes the current logic result onto the stack. This is used to save the state of the current logic evaluation before starting a new sub-expression.
 
--   **Description**: `process_value <<= 1;` followed by `if((process_value&0x02)==0x02) process_value|=0x01; else process_value&=~0x01;` which essentially duplicates the bit that was just pushed.
 -   **Instruction Word (16-bit)**: `0xFFFA`
 
 ### `MRD` (Multi-Point Read)
 
 Reads the value from the top of the logic stack without popping it. The current result is updated with the value of the stack top.
 
--   **Description**: `if((process_value&0x02)==0x02) process_value|=0x01; else process_value&=~0x01;`
 -   **Instruction Word (16-bit)**: `0xFFFB`
 
 ### `MPP` (Multi-Point Pop)
 
 Pops the logic result from the top of the stack. The previous state is restored.
 
--   **Description**: `process_value >>= 1;`
 -   **Instruction Word (16-bit)**: `0xFFFC`
 
 ### `ORB` (OR Block)
 
 Performs a logical OR between the current result and the result at the top of the stack, pops the stack, and stores the new result. This is used to join parallel branches.
 
--   **Description**: `temp=process_value; process_value>>=1; if(((process_value&0x01)==0x01)||((temp&0X01)==0X01)) process_value|=0x01; else process_value&=~0x01;`
 -   **Instruction Word (16-bit)**: `0xFFF9`
 
 ### `ANB` (AND Block)
 
 Performs a logical AND between the current result and the result at the top of the stack, pops the stack, and stores the new result. This is used to connect series blocks that were separated by an MPS.
 
--   **Description**: `temp=process_value; process_value>>=1; if(((process_value&0x01)==0x01)&&((temp&0X01)==0X01)) process_value|=0x01; else process_value&=~0x01;`
 -   **Instruction Word (16-bit)**: `0xFFF8`
 
 ### `INV` (Invert)
 
 Inverts the current logic result.
 
--   **Description**: `if((process_value&0x01)==0x00) process_value|=0x01; else process_value&=~0x01;`
 -   **Instruction Word (16-bit)**: `0xFFFD`
 
 ## Application and Data Instructions
 
-These instructions are enabled by the preceding logicgetResult() and often handle 16-bit or 32-bit data. They are typically encoded as multi-word instructions.
+These instructions are enabled by the preceding logic result and often handle 16-bit or 32-bit data. They are typically encoded as multi-word instructions.
 
-### Common Operand Encoding (`cos_value` and `add_target`)
+### Common Operand Encoding
 
-Many data instructions use a common format for specifying their source and destination operands. The source is decoded by a sequence of logic equivalent to the `cos_value` function, and the destination is handled by logic equivalent to `add_target`. An operand is typically 2 words (32 bits) long.
+Many data instructions use a common format for specifying their source and destination operands. An operand is typically 2 words (32 bits) long.
 
 **Source/Destination Operand Word 1 (16 bits):**
 
@@ -183,6 +163,7 @@ Many data instructions use a common format for specifying their source and desti
 | `0x82` | `D` | Data Register. The full address is `Word1(low) + Word2(low)*0x100`. |
 | `0x84` | `Kn` | Bit-device group (e.g., K4M0 for 16 bits from M0). The address is encoded in the words. |
 | `0x86` | `T/C value` | Timer or Counter current value. Address from operand words. |
+| `0x88` | `P` | Pointer/Label for program control instructions. |
 
 #### Operand Encoding Examples
 
@@ -197,7 +178,7 @@ Many data instructions use a common format for specifying their source and desti
 
 **Example 2: Data Register `D10`**
 
--   **Address**: `10` decimal is `0x000A` hex. The firmware uses this value to index into the `all_data` array at the appropriate base for D registers (`0x0800`).
+-   **Address**: `10` decimal is `0x000A` hex.
 -   **Word 1**: `0x820A`
     -   `0x82`: Operand type for `D` register.
     -   `0x0A`: Low byte of the register address.
@@ -311,14 +292,10 @@ The `CJ` and `CALL` instructions don't jump to a relative offset; they jump to a
     -   **Instruction Word (16-bit)**: `0xB0PP`
     -   `0xB0`: Defines this as a `P` label instruction.
     -   `PP`: The 8-bit pointer number for this label (0-127). This instruction does nothing during execution; it's just a marker.
-2.  **Pre-scan and Table Generation**: Before executing the ladder logic, the firmware performs a pre-scan of the entire program (`find_p()` function). It looks for all `0xB0PP` instructions and records the memory address of each one. These addresses are stored in a jump table array (`prog_p_addr`), indexed by the pointer number `PP`.
-3.  **Execution**: When a `CJ Pn` or `CALL Pn` instruction is executed, it takes its 8-bit pointer number `n`, looks up `prog_p_addr[n]`, and sets the program counter to the retrieved address.
+2.  **Pre-scan and Table Generation**: Before executing the ladder logic, the firmware performs a pre-scan of the entire program. It looks for all `0xB0PP` instructions and records the memory address of each one. These addresses are stored in a jump table array, indexed by the pointer number `PP`.
+3.  **Execution**: When a `CJ Pn` or `CALL Pn` instruction is executed, it takes its 8-bit pointer number `n`, looks up the address in the jump table, and sets the program counter to the retrieved address.
 
 This mechanism allows for fast, direct jumps to any labeled point in the program.
-
-### `CJ` (Conditional Jump)
-
-Jumps to a program label `P` if the preceding logic result is true.
 
 ### `CJ` (Conditional Jump)
 
@@ -363,7 +340,7 @@ Drives a timer coil. When the preceding logic is true, the timer is enabled and 
 -   **Base Opcode**: `0x06TT`
 -   **Instruction Length**: 3 words (48 bits)
 -   **Format**:
-    -   **Word 1**: `0x06TT`, where `TT` is the timer number (0-255).
+    -   **Word 1**: `0x06TT`, where `TT` is the timer number (0-511).
     -   **Word 2-3**: Preset value `S` operand, encoded using the common operand format (e.g., `K` or `D`).
 
 ### `OUT C` (Counter)
@@ -398,7 +375,7 @@ These instructions use a two-word format to access bit operands that are outside
 
 ### Extended Bit Instructions
 
-These are used for `M` and `S` coils that have addresses > 255.
+These are used for `M` and `S` coils that have addresses > 1999 for M and > 499 for S.
 
 -   **Opcodes (Word 1)**:
     -   `LD`: `0x01C2`
@@ -411,8 +388,9 @@ These are used for `M` and `S` coils that have addresses > 255.
     -   `SET`: `0x0003`/`0x0006` (M/S)
     -   `RST`: `0x0004`/`0x0007` (M/S)
 -   **Operand Specifier Banks (Word 2, `YY`)**:
-    -   `0xA8-0xAD`: for `M` relays M2048 and higher.
-    -   `0x80-0x83`: for `S` relays S512 and higher.
+    -   `0xAA`: for `M2048` specifically
+    -   `0xA8-0xAF`: for other `M` relays M2000 and higher.
+    -   `0x80-0x87`: for `S` relays S500 and higher.
 
 ### Pulsed (Edge) Instructions
 

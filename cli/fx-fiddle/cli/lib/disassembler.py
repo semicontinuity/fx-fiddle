@@ -212,10 +212,15 @@ OPERAND_TYPES = {
     0x88: "P",    # Pointer/Label
 }
 
-def decode_operand(words: List[int], index: int) -> Tuple[str, int]:
+def decode_operand(words: List[int], index: int, is_timer_constant: bool = False) -> Tuple[str, int]:
     """
     Decode an operand from the instruction words.
     Returns the operand string and the number of words consumed.
+    
+    Args:
+        words: List of instruction words
+        index: Index of the current word
+        is_timer_constant: Whether this operand is a timer/counter constant
     """
     if index >= len(words):
         return "???", 0
@@ -234,7 +239,13 @@ def decode_operand(words: List[int], index: int) -> Tuple[str, int]:
     word2 = words[index + 1]
     
     if operand_type == 0x80:  # K constant
-        value = (word2 << 8) | low_byte
+        if is_timer_constant:
+            # For timer/counter constants, the value is formed as:
+            # low_byte + (word2 & 0xFF) * 0x100
+            # This matches the enable_T_K() function in Ladder.c
+            value = low_byte + ((word2 & 0xFF) * 0x100)
+        else:
+            value = (word2 << 8) | low_byte
         return f"K{value}", 2
     elif operand_type == 0x82:  # D register
         addr = (word2 << 8) | low_byte
@@ -443,7 +454,7 @@ def decode_instruction(words: List[int], index: int) -> Tuple[str, int]:
             return f"OUT T{low_byte} ???", 1
         
         timer_num = low_byte
-        preset, words_used = decode_operand(words, index + 1)
+        preset, words_used = decode_operand(words, index + 1, is_timer_constant=True)
         return f"OUT T{timer_num} {preset}", 1 + words_used
     
     if (word & 0xFF00) == 0x0E00:  # OUT C
@@ -451,7 +462,7 @@ def decode_instruction(words: List[int], index: int) -> Tuple[str, int]:
             return f"OUT C{low_byte} ???", 1
         
         counter_num = low_byte
-        preset, words_used = decode_operand(words, index + 1)
+        preset, words_used = decode_operand(words, index + 1, is_timer_constant=True)
         return f"OUT C{counter_num} {preset}", 1 + words_used
     
     if word == 0x000C:  # RST T/C

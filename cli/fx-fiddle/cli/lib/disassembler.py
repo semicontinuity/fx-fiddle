@@ -20,6 +20,7 @@ BASIC_BIT_INSTRUCTIONS = {
     0x2C: ("LD", "M", "Internal Relay (1024-1279)"),
     0x2D: ("LD", "M", "Internal Relay (1280-1535)"),
     0x2E: ("LD", "CS", "Counter Status"),
+    0x2F: ("LD", "M8", "Special M Relay (8000+)"),
     
     # LDI instructions (I=3)
     0x30: ("LDI", "S", "Step Relay"),
@@ -32,6 +33,7 @@ BASIC_BIT_INSTRUCTIONS = {
     0x3C: ("LDI", "M", "Internal Relay (1024-1279)"),
     0x3D: ("LDI", "M", "Internal Relay (1280-1535)"),
     0x3E: ("LDI", "CS", "Counter Status"),
+    0x3F: ("LDI", "M8", "Special M Relay (8000+)"),
     
     # AND instructions (I=4)
     0x40: ("AND", "S", "Step Relay"),
@@ -374,6 +376,10 @@ def decode_instruction(words: List[int], index: int) -> Tuple[str, int]:
         if operand_type == "M":
             base_address = get_m_base_address(high_byte)
             return f"{instr} {format_bit_address(operand_type, base_address + low_byte)}", 1
+        
+        # Special handling for M8 (special M relays 8000+)
+        if operand_type == "M8":
+            return f"{instr} M{8000 + low_byte}", 1
         
         # Special handling for X77 (octal) which is 0x3F in hex
         if operand_type == "X" and high_byte == 0x24 and low_byte == 0x3F:

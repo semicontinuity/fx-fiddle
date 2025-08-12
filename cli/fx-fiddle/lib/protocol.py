@@ -551,13 +551,13 @@ class FxProtocol:
         
         return values
     
-    def read_flash(self, address: int, size: int) -> list[int]:
+    def read_flash(self, address: int, size_bytes: int) -> list[int]:
         """
         Read flash memory from the PLC.
         
         Args:
             address: The starting address to read from
-            size: The number of words to read
+            size_bytes: The number of words to read
             
         Returns:
             A list of word values read from flash memory
@@ -579,7 +579,7 @@ class FxProtocol:
         payload.extend(address_chars)
         
         # Add size (2 hex ASCII chars)
-        size_chars = int_to_hex_chars(size, 2)
+        size_chars = int_to_hex_chars(size_bytes, 2)
         payload.extend(size_chars)
         
         # Send command and get response

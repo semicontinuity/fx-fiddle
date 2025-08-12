@@ -33,7 +33,9 @@ def program_body_read(
             all_words = []
             
             while should_continue:
-                values = protocol.read_flash(current_address, CHUNK_SIZE // 2)
+                if verbose:
+                    print(f"Reading 0x{CHUNK_SIZE:04X} of flash at 0x{current_address:04X}")
+                values = protocol.read_flash(current_address, CHUNK_SIZE)
                 
                 if not dry_run and values:
                     # Check for termination
@@ -48,11 +50,15 @@ def program_body_read(
             # Disassemble the program
             disassembled = disassemble_program(all_words)
             
-            # Print the disassembled program
+            # Print the disassembled program with instruction offsets
+            offset = 0
             for instruction_words, disassembled_text in disassembled:
                 # Format the instruction words
                 words_hex = " ".join(f"{word:04X}" for word in instruction_words)
-                print(f"{words_hex}\t{disassembled_text}")
+                # Format the instruction offset in hex (relative to program start)
+                offset_hex = f"0x{offset:04X}"
+                print(f"{offset_hex}:\t{words_hex}\t{disassembled_text}")
+                offset += len(instruction_words) * 2  # Each word is 2 bytes
                 
     except Exception as e:
         click.echo(f"Error: {str(e)}", err=True)

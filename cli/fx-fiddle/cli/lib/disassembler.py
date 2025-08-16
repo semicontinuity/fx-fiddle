@@ -255,13 +255,22 @@ def decode_operand(words: List[int], index: int, is_timer_constant: bool = False
     elif operand_type == 0x84:  # Bit-device group
         # This is a simplification - actual decoding is more complex
         return f"K{word2}M{low_byte}", 2
-    elif operand_type == 0x86:  # Timer/Counter value
-        if low_byte == 0x06:  # Timer
-            return f"T{word2}", 2
-        elif low_byte == 0x0E:  # Counter
-            return f"C{word2}", 2
-        else:
-            return f"T/C({low_byte:02X}){word2}", 2
+    elif operand_type == 0x86:  # 16-bit register access
+        hi_byte2 = (word2 >> 8) & 0xFF
+        lo_byte2 = word2 & 0xFF
+
+        if hi_byte2 == 0x80:
+            # tentative
+            return f"D{8000 + (low_byte + (lo_byte2 << 8))//2}", 2
+        elif hi_byte2 == 0x82:
+            return f"C{(low_byte + (lo_byte2 << 8))//2}", 2
+        elif hi_byte2 == 0x84:
+            return f"T{(low_byte + (lo_byte2 << 8))//2}", 2
+        elif hi_byte2 == 0x86:
+            return f"D{(low_byte + (lo_byte2 << 8))//2}", 2
+        elif hi_byte2 == 0x88:
+            return f"D{1000 + (low_byte + (lo_byte2 << 8))//2}", 2
+
     elif operand_type == 0x88:  # Pointer/Label
         return f"P{low_byte}", 2
     
@@ -432,7 +441,8 @@ def decode_instruction(words: List[int], index: int) -> Tuple[str, int]:
             if index + 4 >= len(words):
                 return f"{instr} ???", 1
             
-            source, words_used1 = decode_operand(words, index + 1)
+            # For MOV instructions, K constants use the same logic as timer constants
+            source, words_used1 = decode_operand(words, index + 1, is_timer_constant=True)
             dest, words_used2 = decode_operand(words, index + 1 + words_used1)
             return f"{instr} {source} {dest}", 1 + words_used1 + words_used2
         

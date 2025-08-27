@@ -151,6 +151,7 @@ EXTENDED_BIT_INSTRUCTIONS = {
     0x0005: ("OUT", "Extended S"),
     0x0006: ("SET", "Extended S"),
     0x0007: ("RST", "Extended S"),
+    0x0202: ("OUT", "Extended M2"),  # Added for 0x0202
 }
 
 # Pulsed (Edge) instructions (first word)
@@ -275,6 +276,7 @@ def decode_operand(words: List[int], index: int, is_timer_constant: bool = False
         return f"P{low_byte}", 2
     
     return f"{OPERAND_TYPES[operand_type]}{low_byte:02X}:{word2:04X}", 2
+
 
 def decode_extended_bit_operand(word: int) -> str:
     """
@@ -498,6 +500,7 @@ def decode_instruction(words: List[int], index: int) -> Tuple[str, int]:
     
     # If we couldn't decode the instruction
     return f"Unknown({word:04X})", 1
+
 
 def disassemble_program(words: List[int]) -> List[Tuple[List[int], str]]:
     """

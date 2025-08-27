@@ -17,25 +17,9 @@ def program_body_write(
 ):
     """Write program body to PLC memory from STDIN."""
     try:
-        PROGRAM_START_ADDRESS = 0x807C
+        PROGRAM_START_ADDRESS = 0x805C
 
-        # Read values from STDIN
-        value_list = []
-        for line in sys.stdin:
-            line = line.strip()
-            if line:
-                try:
-                    value = int(line, 16)  # Parse as hex
-                    if value < 0 or value > 0xFFFF:
-                        raise ValueError("Value must be between 0x0000 and 0xFFFF")
-                    value_list.append(value)
-                except ValueError as e:
-                    click.echo(f"Error parsing value '{line}': {str(e)}", err=True)
-                    sys.exit(1)
-
-        if not value_list:
-            click.echo("Error: No values provided via STDIN", err=True)
-            sys.exit(1)
+        value_list = read_hex_words_from_stdin()
 
         # Create protocol handler
         with FxProtocol(port, dry_run=dry_run, verbose=verbose) as protocol:
@@ -51,3 +35,23 @@ def program_body_write(
     except Exception as e:
         click.echo(f"Error: {str(e)}", err=True)
         sys.exit(1)
+
+
+def read_hex_words_from_stdin():
+    # Read values from STDIN
+    value_list = []
+    for line in sys.stdin:
+        line = line.strip()
+        if line:
+            try:
+                value = int(line, 16)  # Parse as hex
+                if value < 0 or value > 0xFFFF:
+                    raise ValueError("Value must be between 0x0000 and 0xFFFF")
+                value_list.append(value)
+            except ValueError as e:
+                click.echo(f"Error parsing value '{line}': {str(e)}", err=True)
+                sys.exit(1)
+    if not value_list:
+        click.echo("Error: No values provided via STDIN", err=True)
+        sys.exit(1)
+    return value_list

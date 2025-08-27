@@ -30,16 +30,18 @@ def flash_read(
         addr_int = parse_int_or_hex(address)
         size_int = parse_int_or_hex(size)
         
-        # Create protocol handler
         with FxProtocol(port, dry_run=dry_run, verbose=verbose) as protocol:
             # Read flash memory
             values = protocol.read_flash(addr_int, size_int)
             
             # If not dry run, display results
             if not dry_run and values:
-                print(f"Flash memory read from address {address} (0x{addr_int:X}), size {size} (0x{size_int:X}):")
+                print(f"Flash memory read from address {address} (0x{addr_int:X}), size {size} (0x{size_int:X}):", file=sys.stderr)
                 for i, value in enumerate(values):
-                    print(f"  [0x{addr_int + i:X}]: {value} (0x{value:04X})")
+                    if verbose:
+                        print(f"  [0x{addr_int + i:X}]: {value} (0x{value:04X})")
+                    else:
+                        print(f"{value:04X}")
     
     except Exception as e:
         click.echo(f"Error: {str(e)}", err=True)

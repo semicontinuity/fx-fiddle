@@ -5,6 +5,7 @@ The following table describes the different sections of the device's RAM, which 
 | Memory Area              | Protocol Address Range (Hex) | Word/Bit | Size       | Description |
 |--------------------------|-----------------------------|----------|------------|-------------|
 | M Coils (General)        | 0000 - 007F                 | Bit      | 128 Bytes  | General-purpose internal relays M0 to M1023. |
+| M Coils (Special)        | 6000 - 6XXX                 | Bit      | ? Bytes    | Special relays M8000+.                       |
 | Y Outputs                | 0180 - 019F                 | Bit      | 32 Bytes   | Maps to the state of the physical digital outputs, likely Y0 - Y255. |
 | X Inputs                 | 0240 - 025F                 | Bit      | 32 Bytes   | Maps to the state of the physical digital inputs, likely X0 - X255. |
 | C Counters (Standard)    | 0A00 - 0C00                 | Word     | 256 Words  | The current 16-bit values for standard, non-retentive counters, likely C0 to C255. |

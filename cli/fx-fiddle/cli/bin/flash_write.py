@@ -29,14 +29,37 @@ def flash_write(
         value_list = read_hex_words_from_stdin()
 
         with FxProtocol(port, dry_run=dry_run, verbose=verbose) as protocol:
-            # Write flash memory
+            if not protocol.start_communication():
+                raise ValueError("Failed to establish communication with PLC")
+
+            # do something
+            protocol.send_command(b'F50100060')
+
+            # BS 6025 => set M8037, "prohibit all outputs"=true
+            protocol.send_command_expect_ack(b'E72560')
+
+            # (may be set M8118 here)
+
+            # do something with 805C address
+            protocol.send_command_expect_ack(b'F71805C1FD5C0FF')
+
+            # do something
+            protocol.send_command(b'F50106960')
+
             protocol.write_flash(addr_int, value_list)
-            
+
+            # (may be clear M8118 here)
+
+            protocol.lock_flash()
+
+            # BC 6025 => clear M8037, "prohibit all outputs"=false
+            protocol.send_command_expect_ack(b'E82560')
+
             # If not dry run, display confirmation
-            if not dry_run:
-                print(f"Flash memory written to address {address} (0x{addr_int:X}):")
+            if not dry_run and verbose:
+                print(f"Flash memory written to address {address} (0x{addr_int:X}):", file=sys.stderr)
                 for i, value in enumerate(value_list):
-                    print(f"  [0x{addr_int + i:X}]: {value} (0x{value:04X})")
+                    print(f"  [0x{addr_int + i:X}]: {value} (0x{value:04X})", file=sys.stderr)
     
     except Exception as e:
         click.echo(f"Error: {str(e)}", err=True)

@@ -24,8 +24,7 @@ def flash_lock(
     """Lock flash memory after programming."""
     try:
         with FxProtocol(port, dry_run=dry_run, verbose=verbose) as protocol:
-            # Send flash lock command (ASCII 'B') - using send_command_expect_ack since we expect just an ACK
-            success = protocol.send_command_expect_ack(b'B')
+            success = protocol.lock_flash()
 
             if not dry_run:
                 if success:

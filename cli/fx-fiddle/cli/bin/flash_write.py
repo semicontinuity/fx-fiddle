@@ -33,26 +33,38 @@ def flash_write(
                 raise ValueError("Failed to establish communication with PLC")
 
             # do something
+            print('F50100060', file=sys.stderr)
             protocol.send_command(b'F50100060')
 
             # BS 6025 => set M8037, "prohibit all outputs"=true
+            print('Set M8037', file=sys.stderr)
             protocol.send_command_expect_ack(b'E72560')
 
             # (may be set M8118 here)
+            print('Set M8118', file=sys.stderr)
+            protocol.send_command_expect_ack(b'E77660')
 
             # do something with 805C address
+            print('F71805C1FD5C0FF', file=sys.stderr)
             protocol.send_command_expect_ack(b'F71805C1FD5C0FF')
 
             # do something
-            protocol.send_command(b'F50106960')
+            print('F50106960', file=sys.stderr)
+            r = protocol.send_command(b'F50106960')
+            print(r, file=sys.stderr)
 
+            print('Write flash', file=sys.stderr)
             protocol.write_flash(addr_int, value_list)
 
-            # (may be clear M8118 here)
+            # (may be clear M8118 here) BC 6076
+            print('Clear M8118', file=sys.stderr)
+            protocol.send_command_expect_ack(b'E87660')
 
+            print('Lock flash', file=sys.stderr)
             protocol.lock_flash()
 
             # BC 6025 => clear M8037, "prohibit all outputs"=false
+            print('Clear M8037', file=sys.stderr)
             protocol.send_command_expect_ack(b'E82560')
 
             # If not dry run, display confirmation

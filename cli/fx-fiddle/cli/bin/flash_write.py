@@ -40,7 +40,15 @@ def flash_write(
             print('Set M8037', file=sys.stderr)
             protocol.send_command_expect_ack(b'E72560')
 
-            # (may be set M8118 here)
+            # do something
+            print('F50100060', file=sys.stderr)
+            protocol.send_command(b'F50100060')
+
+            # do something
+            print('F501108006', file=sys.stderr)
+            protocol.send_command(b'F501108006')
+
+            # BS 6076 (set M8118)
             print('Set M8118', file=sys.stderr)
             protocol.send_command_expect_ack(b'E77660')
 
